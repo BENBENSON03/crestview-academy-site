@@ -1,0 +1,3420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crestview Academy | Inspiring Minds. Shaping Futures</title>
+  <meta name="description" content="Crestview Academy is a private school that empowers students to excel academically, lead confidently, and make a meaningful impact.">
+
+  <!-- Font: Plus Jakarta Sans (one family, three weights). Falls back to system sans-serif if offline. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+/* ==========================================================================
+   CRESTVIEW ACADEMY – HOMEPAGE STYLES
+   Table of contents (search for these headings):
+     1. GLOBAL STYLES
+     2. SECTION 1: NAVIGATION BAR
+     3. SECTION 1: MEGA MENU
+     4. SECTION 2: HERO SECTION
+     5. SECTION 2: HERO ANIMATIONS
+     6. SECTION 3: TICKER SECTION
+     7. SECTION 4: CAROUSEL SECTION
+     8. VIDEO MODAL + TOAST
+     8c. SECTION 12: CONTACT US and SECTION 13: FOOTER
+     8b. SECTIONS 5–11 (About, Programs, Why Us, Facilities, News, Testimonials, Admission CTA)
+     9. RESPONSIVE DESIGN
+    10. ACCESSIBILITY AND REDUCED MOTION
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. GLOBAL STYLES
+   Design tokens (colours, spacing, radii, motion) live here. Change a value
+   once and it updates everywhere.
+   ========================================================================== */
+:root {
+  /* Colours */
+  --blue-900: #071e5a;
+  --blue-700: #0b3a9e;
+  --blue-600: #1d5fd8;      /* primary blue (buttons, accents) */
+  --blue-500: #2f74ea;
+  --blue-300: #7fbcff;      /* light blue used for text on dark backgrounds */
+  --yellow: #ffc928;        /* navbar CTA + animated underlines */
+  --yellow-hover: #ffd75c;
+  --green: #34d399;         /* subtle aurora accent */
+  --navy: #061a40;          /* ticker */
+  --ocean: #0b5cab;         /* ticker */
+  --sky: #7cc8ff;           /* ticker highlights */
+  --ink: #142033;           /* dark text on light backgrounds */
+  --muted: #52607a;
+  --line: #e3e9f3;
+  --white: #ffffff;
+  --surface: #f5f8fd;
+
+  /* Typography */
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* Spacing scale (use these instead of random numbers) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+
+  /* Border radii */
+  --radius-sm: 5px;
+  --radius-md: 10px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  /* Layout */
+  --container: 1200px;
+  --gutter: clamp(1rem, 4vw, 2rem);
+  --nav-height: 76px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 0.8, 0.2, 1);
+  --transition: 0.25s var(--ease);
+
+  --shadow-sm: 0 2px 10px rgba(7, 30, 90, 0.08);
+  --shadow-lg: 0 24px 60px rgba(7, 30, 90, 0.28);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+[hidden] { display: none !important; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-height);
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Stops the page from scrolling behind the open mega menu / modal */
+html.is-locked { overflow: hidden; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--white);
+  overflow-x: clip;         /* safety net: never allow sideways scrolling */
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+ul { margin: 0; padding: 0; list-style: none; }
+
+h1, h2, p, figure { margin: 0; }
+
+a { color: inherit; text-decoration: none; }
+
+button { font: inherit; color: inherit; cursor: pointer; }
+
+/* Common width wrapper used by every section */
+.container {
+  width: min(var(--container), 100% - 2 * var(--gutter));
+  margin-inline: auto;
+}
+
+/* Buttons – shared base + colour variants */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 48px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.975rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  border: 2px solid transparent;
+  transition: transform var(--transition), background-color var(--transition),
+              box-shadow var(--transition), border-color var(--transition), color var(--transition);
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+
+.btn--yellow {
+  background: var(--yellow);
+  color: var(--ink);
+  border-radius: var(--radius-md);
+}
+.btn--yellow:hover { background: var(--yellow-hover); box-shadow: 0 8px 18px rgba(255, 201, 40, 0.45); }
+
+.btn--blue {
+  background: var(--blue-600);
+  color: var(--white);
+  border-radius: var(--radius-sm);          /* 5px as specified */
+  border-color: rgba(255, 255, 255, 0.35);  /* keeps it visible against the dark-blue hero */
+}
+.btn--blue:hover { background: var(--blue-500); box-shadow: 0 10px 22px rgba(7, 30, 90, 0.35); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--white);
+  border-radius: var(--radius-md);          /* 10px as specified */
+  border-color: rgba(255, 255, 255, 0.55);
+}
+.btn--ghost:hover { background: rgba(255, 255, 255, 0.14); border-color: var(--white); }
+
+.btn__icon { flex: none; }
+
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 3px solid var(--blue-500);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.skip-link {
+  position: fixed;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 1000;
+  padding: var(--space-3) var(--space-4);
+  background: var(--yellow);
+  color: var(--ink);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transform: translateY(-200%);
+  transition: transform var(--transition);
+}
+.skip-link:focus { transform: translateY(0); }
+
+
+/* ==========================================================================
+   2. SECTION 1: NAVIGATION BAR
+   Layout: [logo]  [main menu – centred]  [CTA + hamburger]
+   ========================================================================== */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--white);
+  transition: box-shadow var(--transition);
+}
+.navbar.is-scrolled { box-shadow: 0 4px 24px rgba(7, 30, 90, 0.1); }
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  height: var(--nav-height);
+}
+
+/* --- Logo --- */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: none;
+}
+.logo__mark { width: 38px; height: auto; flex: none; }
+.logo__text { display: flex; flex-direction: column; line-height: 1; }
+.logo__name { font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; color: var(--blue-900); }
+.logo__tagline {
+  margin-top: 4px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--blue-600);
+}
+
+/* --- Main menu --- */
+.main-nav { flex: 1; display: flex; justify-content: center; }
+.main-nav__list { display: flex; align-items: center; gap: clamp(1rem, 2.2vw, 2.25rem); }
+
+.main-nav__link {
+  position: relative;
+  display: block;
+  padding: var(--space-2) 0;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ink);
+  white-space: nowrap;
+  transition: color var(--transition);
+}
+.main-nav__link:hover,
+.main-nav__link.is-active { color: var(--blue-900); }
+
+/* Yellow underline: grows from left to right on hover, and retracts to the right on leave */
+.main-nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--yellow);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 0.35s var(--ease);
+}
+.main-nav__link:hover::after,
+.main-nav__link:focus-visible::after,
+.main-nav__link.is-active::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* --- CTA + hamburger --- */
+.navbar__actions { display: flex; align-items: center; gap: var(--space-4); flex: none; }
+.navbar__cta { min-height: 44px; padding: 0.6rem 1.25rem; }
+
+.hamburger {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition), border-color var(--transition);
+}
+.hamburger:hover { background: #e9f0fc; border-color: #c9d7f0; }
+.hamburger__bar {
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--blue-900);
+  transition: transform var(--transition), opacity var(--transition);
+}
+/* Turns into an "X" while the menu is open */
+.hamburger[aria-expanded="true"] .hamburger__bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger[aria-expanded="true"] .hamburger__bar:nth-child(2) { opacity: 0; }
+.hamburger[aria-expanded="true"] .hamburger__bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+
+/* ==========================================================================
+   3. SECTION 1: MEGA MENU
+   A fixed layer holding a dark overlay + a full-height panel that slides in
+   from the right. `overflow: hidden` on the layer prevents sideways scrolling
+   while the panel is parked off-screen.
+   ========================================================================== */
+.mega {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+  /* Stay visible until the slide-out finishes, then hide */
+  transition: visibility 0s linear 0.5s;
+}
+.mega.is-open {
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+.mega__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 26, 64, 0.55);
+  opacity: 0;
+  transition: opacity 0.45s var(--ease);
+}
+.mega.is-open .mega__overlay { opacity: 1; }
+
+.mega__panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  width: min(1080px, 100%);
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--white);
+  box-shadow: -20px 0 60px rgba(6, 26, 64, 0.25);
+  transform: translateX(100%);
+  transition: transform 0.5s var(--ease);
+}
+.mega.is-open .mega__panel { transform: translateX(0); }
+
+.mega__header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--nav-height);
+  flex: none;
+  padding-inline: var(--gutter);
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+}
+.mega__title { font-weight: 800; font-size: 1.15rem; color: var(--blue-900); letter-spacing: -0.01em; }
+
+.mega__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  color: var(--blue-900);
+  transition: background-color var(--transition), transform var(--transition);
+}
+.mega__close:hover { background: var(--yellow); border-color: var(--yellow); transform: rotate(90deg); }
+
+/* Two columns: categories on the left, submenu + image on the right */
+.mega__body {
+  display: grid;
+  grid-template-columns: 270px 1fr;
+  flex: 1;
+}
+
+.mega__categories {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-6) var(--space-4) var(--space-6) var(--gutter);
+  background: var(--surface);
+  border-right: 1px solid var(--line);
+}
+
+.mega-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: 0.95rem var(--space-4);
+  text-align: left;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  border-left: 4px solid transparent;
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition), color var(--transition), border-color var(--transition);
+}
+.mega-tab__num { font-size: 0.75rem; font-weight: 800; color: var(--muted); letter-spacing: 0.08em; }
+.mega-tab:hover { background: #e9f0fc; }
+.mega-tab.is-active {
+  background: var(--white);
+  color: var(--blue-700);
+  border-left-color: var(--yellow);
+  box-shadow: var(--shadow-sm);
+}
+.mega-tab.is-active .mega-tab__num { color: var(--blue-600); }
+
+.mega__content { padding: var(--space-6) var(--gutter); min-width: 0; }
+
+/* Each category panel: five links + one image */
+.mega-panel {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: stretch;
+  animation: mega-panel-in 0.45s var(--ease) both;
+}
+
+.mega-panel__links { display: flex; flex-direction: column; justify-content: center; gap: var(--space-1); }
+.mega-panel__links li { animation: mega-link-in 0.45s var(--ease) both; }
+.mega-panel__links li:nth-child(1) { animation-delay: 0.05s; }
+.mega-panel__links li:nth-child(2) { animation-delay: 0.10s; }
+.mega-panel__links li:nth-child(3) { animation-delay: 0.15s; }
+.mega-panel__links li:nth-child(4) { animation-delay: 0.20s; }
+.mega-panel__links li:nth-child(5) { animation-delay: 0.25s; }
+
+.mega-panel__links a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 1rem var(--space-3);
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-bottom: 1px solid var(--line);
+  transition: color var(--transition), padding-left var(--transition);
+}
+.mega-panel__links a::after {
+  content: "→";
+  color: var(--blue-600);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity var(--transition), transform var(--transition);
+}
+.mega-panel__links a:hover { color: var(--blue-600); padding-left: var(--space-4); }
+.mega-panel__links a:hover::after,
+.mega-panel__links a:focus-visible::after { opacity: 1; transform: translateX(0); }
+
+.mega-panel__figure {
+  min-height: 320px;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+.mega-panel__figure img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Links to other pages shown only when the main navbar is hidden (see RESPONSIVE) */
+.mega__quick {
+  display: none;
+  padding: var(--space-5) var(--gutter) var(--space-6);
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+.mega__quick-list { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
+.mega__quick-list a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  transition: border-color var(--transition), color var(--transition);
+}
+.mega__quick-list a:hover { border-color: var(--blue-600); color: var(--blue-600); }
+.mega__quick-cta { width: 100%; }
+
+@keyframes mega-panel-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes mega-link-in {
+  from { opacity: 0; transform: translateX(14px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+
+
+/* Header links whose page does not exist yet: they keep every hover effect, a click just does nothing */
+.navbar a.is-disabled { cursor: default; }
+
+/* ==========================================================================
+   4. SECTION 2: HERO SECTION
+   Aurora background = several soft radial glows layered over a blue-to-aqua base.
+   The left side stays deep blue so the white heading is always readable.
+   ========================================================================== */
+.hero {
+  position: relative;
+  overflow: hidden;
+  color: var(--white);
+  background:
+    radial-gradient(48% 60% at 92% 8%,  rgba(255, 255, 255, 0.55), transparent 65%),   /* white glow, top right */
+    radial-gradient(55% 65% at 88% 100%, rgba(52, 211, 153, 0.60), transparent 65%),   /* green glow, bottom right */
+    radial-gradient(45% 70% at 8% 0%,   rgba(47, 116, 234, 0.75), transparent 70%),    /* bright blue, top left */
+    linear-gradient(115deg, #061b55 0%, #0a3596 42%, #1d68d0 68%, #a9dfe0 100%);       /* base */
+}
+
+.hero__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+  padding-block: clamp(2.5rem, 6vw, 5rem);
+  min-height: min(720px, calc(100svh - var(--nav-height)));
+}
+
+.hero__content { max-width: 600px; }
+
+.hero__eyebrow {
+  display: inline-block;
+  margin-bottom: var(--space-4);
+  padding: 0.35rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  color: #d8ebff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+}
+
+.hero__title {
+  display: flex;
+  flex-direction: column;
+  font-size: clamp(2.5rem, 5.4vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-5);
+}
+.hero__title-line--white { color: var(--white); }
+.hero__title-line--blue  { color: var(--blue-300); }   /* bright blue so it reads on the deep-blue gradient */
+
+.hero__description {
+  max-width: 34rem;
+  margin-bottom: var(--space-6);
+  font-size: clamp(1.02rem, 1.4vw, 1.2rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.hero__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+.hero__buttons .btn { min-height: 52px; }
+
+/* --- Social proof: four overlapping circles + text on one line --- */
+.social-proof { display: flex; align-items: center; gap: var(--space-4); }
+.social-proof__avatars { display: flex; flex: none; }
+.social-proof__avatars li + li { margin-left: -14px; }   /* the overlap */
+.social-proof__avatars img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #0b3a9e;
+  background: var(--surface);
+}
+.social-proof__text { font-weight: 600; font-size: 1rem; color: var(--white); }
+
+/* --- Right column --- */
+.hero__media { position: relative; justify-self: center; width: 100%; max-width: 520px; }
+
+.hero__photo {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #dbe8fb;
+  border: 6px solid rgba(255, 255, 255, 0.85);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+.hero__photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; }
+
+/* Overlaps the right edge, around the vertical middle (away from the student's face) */
+.achievement-card {
+  position: absolute;
+  top: 55%;
+  right: -2.5rem;
+  min-width: 170px;
+  padding: var(--space-4) var(--space-5);
+  text-align: center;
+  color: var(--ink);
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 16px 40px rgba(7, 30, 90, 0.25);
+}
+.achievement-card__number {
+  font-size: clamp(2.5rem, 4vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--blue-600);
+}
+.achievement-card__label { margin-top: var(--space-2); font-size: 0.9rem; font-weight: 600; color: var(--muted); }
+
+
+/* ==========================================================================
+   5. SECTION 2: HERO ANIMATIONS
+   Only opacity + transform are animated, so nothing around them moves.
+   `both` keeps the starting state (hidden) during the delay.
+   Stagger comes from the .delay-N classes in the HTML.
+   ========================================================================== */
+.anim-left { animation: fade-in-left 0.8s var(--ease) both; animation-delay: var(--delay, 0s); }
+.anim-top  { animation: fade-in-top 0.9s var(--ease) 0.2s both; }
+.anim-fade { animation: fade-in 0.8s var(--ease) 0.8s both; }
+
+.delay-1 { --delay: 0.05s; }
+.delay-2 { --delay: 0.15s; }
+.delay-3 { --delay: 0.25s; }
+.delay-4 { --delay: 0.35s; }
+.delay-5 { --delay: 0.45s; }
+
+@keyframes fade-in-left { from { opacity: 0; transform: translateX(-28px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes fade-in-top  { from { opacity: 0; transform: translateY(-28px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fade-in      { from { opacity: 0; transform: scale(0.96); }      to { opacity: 1; transform: scale(1); } }
+
+
+/* ==========================================================================
+   6. SECTION 3: TICKER SECTION
+   ========================================================================== */
+.ticker {
+  position: relative;
+  overflow: hidden;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  color: var(--white);
+  background:
+    radial-gradient(40% 180% at 20% 0%, rgba(124, 200, 255, 0.28), transparent 70%),
+    radial-gradient(40% 180% at 80% 100%, rgba(124, 200, 255, 0.2), transparent 70%),
+    linear-gradient(90deg, var(--navy), #08387a 45%, var(--ocean) 75%, #08387a);
+  border-top: 1px solid rgba(124, 200, 255, 0.35);
+  border-bottom: 1px solid rgba(124, 200, 255, 0.2);
+}
+
+/* Soft fade at both edges */
+.ticker::before,
+.ticker::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: clamp(40px, 8vw, 120px);
+  pointer-events: none;
+}
+.ticker::before { left: 0;  background: linear-gradient(90deg, var(--navy), transparent); }
+.ticker::after  { right: 0; background: linear-gradient(270deg, #08387a, transparent); }
+
+.ticker__track {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll 55s linear infinite;   /* bigger number = slower */
+  will-change: transform;
+}
+.ticker__group { display: flex; flex: none; }
+
+.ticker__item {
+  display: flex;
+  align-items: center;
+  flex: none;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  padding-right: clamp(1.25rem, 3vw, 2.5rem);
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+/* Light-blue diamond separator after every message */
+.ticker__item::after {
+  content: "";
+  width: 9px;
+  height: 9px;
+  flex: none;
+  background: var(--sky);
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+
+/* Moving exactly -50% = one whole group, so the loop is seamless */
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Pause on hover – only on devices that really hover (not touch screens) */
+@media (hover: hover) {
+  .ticker:hover .ticker__track { animation-play-state: paused; }
+}
+
+
+/* ==========================================================================
+   7. SECTION 4: CAROUSEL SECTION
+   Slides sit side by side in a flex track. JavaScript only changes the
+   --slide-index custom property; the CSS transform does the sliding.
+   ========================================================================== */
+.carousel-section { padding-block: clamp(3rem, 7vw, 6rem); background: var(--surface); }
+
+.carousel-section__header { max-width: 40rem; margin-bottom: var(--space-6); }
+.carousel-section__eyebrow {
+  margin-bottom: var(--space-2);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  color: var(--blue-600);
+}
+.carousel-section__title {
+  font-size: clamp(1.75rem, 3.6vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--blue-900);
+}
+
+.carousel { --slide-index: 1; position: relative; }
+
+.carousel__viewport {
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  background: #dbe8fb;
+  touch-action: pan-y;           /* vertical page scroll still works while swiping sideways */
+}
+
+.carousel__track {
+  display: flex;
+  transform: translateX(calc(var(--slide-index) * -100%));
+  transition: transform 0.65s var(--ease);
+}
+.carousel__track.is-instant { transition: none; }   /* used for the invisible loop jump */
+
+.carousel__slide {
+  position: relative;
+  flex: 0 0 100%;
+  min-width: 0;
+  aspect-ratio: 16 / 8;
+  overflow: hidden;
+}
+.carousel__slide img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+
+/* Short, unobtrusive caption with a soft gradient for legibility */
+.carousel__caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: var(--space-6) var(--space-5) var(--space-4);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--white);
+  background: linear-gradient(0deg, rgba(6, 26, 64, 0.7), transparent);
+}
+
+.carousel__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+
+.carousel__dots { display: flex; align-items: center; gap: 4px; }
+/* Each dot has a 24px tap area; the visible dot is drawn with ::before */
+.carousel__dot {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+.carousel__dot::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #b5c5e2;
+  transition: width var(--transition), background-color var(--transition);
+}
+.carousel__dot:hover::before { background: var(--blue-500); }
+.carousel__dot.is-active::before { width: 28px; background: var(--blue-600); }
+
+.carousel__buttons { display: flex; align-items: center; gap: var(--space-2); }
+
+.carousel__arrow,
+.carousel__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  color: var(--blue-900);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  transition: background-color var(--transition), color var(--transition), transform var(--transition), border-color var(--transition);
+}
+.carousel__arrow:hover { background: var(--blue-600); border-color: var(--blue-600); color: var(--white); transform: translateY(-2px); }
+.carousel__toggle { width: 40px; height: 40px; margin-right: var(--space-2); }
+.carousel__toggle:hover { background: #e9f0fc; }
+
+/* Show pause icon while playing, play icon while paused */
+.carousel__toggle .icon-play { display: none; }
+.carousel__toggle.is-paused .icon-play { display: block; }
+.carousel__toggle.is-paused .icon-pause { display: none; }
+
+
+/* ==========================================================================
+   8. VIDEO MODAL + TOAST
+   ========================================================================== */
+.video-modal {
+  width: min(900px, calc(100% - 2rem));
+  padding: 0;
+  overflow: hidden;
+  color: var(--white);
+  background: var(--navy);
+  border: 0;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+.video-modal[open] { animation: modal-in 0.35s var(--ease); }
+.video-modal::backdrop { background: rgba(6, 26, 64, 0.72); }
+
+.video-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4) var(--space-3) var(--space-5);
+}
+.video-modal__title { font-size: 1.05rem; }
+.video-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.1);
+  border: 0;
+  border-radius: 50%;
+  transition: background-color var(--transition);
+}
+.video-modal__close:hover { background: rgba(255, 255, 255, 0.25); }
+
+.video-modal__stage { aspect-ratio: 16 / 9; background: #02102b; }
+.video-modal__stage iframe { width: 100%; height: 100%; border: 0; }
+.video-modal__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: 100%;
+  padding: var(--space-5);
+  text-align: center;
+  color: #cfe3ff;
+}
+.video-modal__placeholder code { padding: 2px 6px; font-size: 0.85em; color: var(--yellow); background: rgba(255, 255, 255, 0.1); border-radius: var(--radius-sm); }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: var(--space-5);
+  z-index: 400;
+  max-width: calc(100% - 2rem);
+  padding: var(--space-3) var(--space-5);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--white);
+  background: var(--navy);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 12px);
+  transition: opacity var(--transition), transform var(--transition), visibility 0s linear 0.25s;
+}
+.toast.is-visible { opacity: 1; visibility: visible; transform: translate(-50%, 0); transition-delay: 0s; }
+
+@keyframes modal-in { from { opacity: 0; transform: translateY(16px) scale(0.98); } to { opacity: 1; transform: none; } }
+
+
+/* ==========================================================================
+   SHARED PIECES FOR SECTIONS 5–11
+   Section spacing, headings, icons, links and the scroll "reveal" animation.
+   (Each section below keeps its own responsive rules at the end of its block.)
+   ========================================================================== */
+.icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+.section { padding-block: clamp(3.5rem, 8vw, 6.5rem); }
+.section--tint { background: var(--surface); }
+
+.section-heading { max-width: 44rem; margin: 0 auto var(--space-7); text-align: center; }
+.section-heading__title {
+  font-size: clamp(1.8rem, 3.8vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--blue-900);
+}
+/* Small blue→green bar under every centred section heading */
+.section-heading__title::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 4px;
+  margin: var(--space-4) auto 0;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--blue-600), var(--green));
+}
+.section-heading__subtitle { margin-top: var(--space-4); font-size: clamp(1rem, 1.5vw, 1.15rem); color: var(--muted); }
+
+/* Accent colours: a card/badge gets --accent (strong) and --accent-soft (tint) from its modifier class */
+.program-card--green, .feature-card--green, .date-badge--green, .testimonial-card--green { --accent: #0b8a63; --accent-soft: #def5ec; }
+.program-card--blue,  .feature-card--blue,  .date-badge--blue,  .testimonial-card--blue  { --accent: var(--blue-600); --accent-soft: #e4edff; }
+.program-card--teal,  .feature-card--teal,  .date-badge--teal  { --accent: #0b7f93; --accent-soft: #dcf2f6; }
+
+/* Round icon holder (stroke icons from the sprite) */
+.icon-chip {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  color: var(--accent, var(--blue-600));
+  background: var(--accent-soft, #e4edff);
+  border-radius: 14px;
+  transition: background-color var(--transition), color var(--transition), transform var(--transition);
+}
+.icon-chip--lg { width: 60px; height: 60px; border-radius: 18px; }
+.icon-chip--sm { width: 36px; height: 36px; border-radius: 10px; }
+.icon-chip svg {
+  width: 55%;
+  height: 55%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* "Learn More →" style links, pinned to the bottom of their cards */
+.card-link {
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: var(--space-4);
+  font-weight: 800;
+  color: var(--accent, var(--blue-600));
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+  transition: text-decoration-color var(--transition), letter-spacing var(--transition), color var(--transition);
+}
+.card-link:hover, .card-link:focus-visible { text-decoration-color: currentColor; letter-spacing: 0.01em; }
+
+/* Scroll reveal: JavaScript adds .is-visible when the element enters the screen.
+   The .js class (added by script.js) means visitors without JavaScript still see everything. */
+.js .reveal { opacity: 0; }
+.js .reveal.is-visible {
+  opacity: 1;
+  animation: reveal-up 0.75s var(--ease) backwards;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes reveal-up { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+
+
+/* ==========================================================================
+   SECTION 5: ABOUT US
+   ========================================================================== */
+.about {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--white);
+  background: var(--navy);   /* shown until the photo loads */
+}
+.about__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+/* Strong navy overlay: the photo stays visible but text is always readable */
+.about__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, rgba(4, 18, 52, 0.94) 0%, rgba(6, 30, 78, 0.88) 55%, rgba(7, 45, 98, 0.82) 100%);
+}
+
+.about__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: clamp(2.5rem, 7vw, 6rem);
+  padding-block: clamp(4rem, 9vw, 7rem);
+}
+
+.about__brand { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-6); }
+.about__brand-mark { width: 34px; height: auto; flex: none; }
+.about__brand-name { font-size: 1.15rem; font-weight: 800; letter-spacing: -0.01em; }
+
+.about__title {
+  margin-bottom: var(--space-6);
+  font-size: clamp(2.5rem, 5.2vw, 4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #3cc3d6;            /* teal-blue accent that stays clear on the dark navy */
+}
+
+.about__circle {
+  width: clamp(130px, 16vw, 190px);
+  height: clamp(130px, 16vw, 190px);
+  object-fit: cover;
+  border-radius: 50%;
+  border: 5px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+  background: var(--blue-700);
+}
+
+.about__content p { font-size: clamp(1rem, 1.3vw, 1.1rem); line-height: 1.85; color: rgba(255, 255, 255, 0.92); }
+.about__content p + p { margin-top: var(--space-4); }
+
+.about__stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin: var(--space-6) 0 var(--space-3);
+}
+.about__stat {
+  display: flex;
+  flex-direction: column-reverse;   /* big number on top, label underneath */
+  padding-left: var(--space-3);
+  border-left: 3px solid var(--green);
+}
+.about__stat dd { margin: 0; font-size: clamp(1.6rem, 2.6vw, 2.25rem); font-weight: 800; line-height: 1.1; color: var(--white); }
+.about__stat dt { font-size: 0.85rem; line-height: 1.3; color: rgba(255, 255, 255, 0.78); }
+.about__content .about__note { font-size: 0.8rem; font-style: italic; color: rgba(255, 255, 255, 0.6); }
+
+.about__link {
+  display: inline-block;
+  margin-top: var(--space-6);
+  padding-bottom: 4px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--white);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+  transition: color var(--transition), border-color var(--transition), letter-spacing var(--transition);
+}
+.about__link:hover, .about__link:focus-visible { color: var(--yellow); border-color: var(--yellow); letter-spacing: 0.02em; }
+
+@media (max-width: 899px) {
+  .about__inner { grid-template-columns: 1fr; gap: var(--space-6); }
+  .about__title { margin-bottom: var(--space-5); }
+  .about__stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+
+/* ==========================================================================
+   SECTION 6: ACADEMIC PROGRAMS
+   ========================================================================== */
+.programs__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); }
+
+.program-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 6px 24px rgba(7, 30, 90, 0.09);
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+.program-card::after {            /* coloured accent bar along the bottom edge */
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 5px;
+  background: var(--accent);
+}
+.program-card:hover { transform: translateY(-6px); box-shadow: 0 18px 44px rgba(7, 30, 90, 0.16); }
+
+.program-card__image { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--accent-soft); }
+
+.program-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 0 var(--space-5) var(--space-5);
+}
+/* The icon overlaps the bottom edge of the photo */
+.program-card__body .icon-chip { margin-top: -26px; border: 4px solid var(--white); box-sizing: content-box; }
+.program-card__title { margin: var(--space-4) 0 var(--space-2); font-size: 1.4rem; letter-spacing: -0.015em; color: var(--blue-900); }
+.program-card__text { color: var(--muted); }
+
+@media (max-width: 1023px) {
+  .programs__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .program-card--teal { grid-column: 1 / -1; max-width: calc(50% - var(--space-5) / 2); justify-self: center; }
+}
+@media (max-width: 639px) {
+  .programs__grid { grid-template-columns: 1fr; }
+  .program-card--teal { max-width: none; }
+}
+
+
+/* ==========================================================================
+   SECTION 7: WHY CHOOSE OUR SCHOOL
+   Flex-wrap + centring keeps the last row (2 cards) balanced on desktop.
+   ========================================================================== */
+.why__grid { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-5); }
+
+.feature-card {
+  flex: 0 1 calc((100% - 2 * var(--space-5)) / 3);   /* three per row */
+  padding: var(--space-6) var(--space-5);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--accent);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.feature-card:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(7, 30, 90, 0.12); }
+.feature-card:hover .icon-chip { background: var(--accent); color: var(--white); }
+.feature-card__title { margin: var(--space-4) 0 var(--space-2); font-size: 1.2rem; color: var(--blue-900); letter-spacing: -0.01em; }
+.feature-card p { color: var(--muted); }
+
+@media (max-width: 1023px) {
+  .feature-card { flex-basis: calc((100% - var(--space-5)) / 2); }   /* two per row */
+}
+@media (max-width: 639px) {
+  .feature-card { flex-basis: 100%; }
+}
+
+
+/* ==========================================================================
+   SECTION 8: SCHOOL FACILITIES
+   ========================================================================== */
+.facilities__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); }
+
+.facility-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+.facility-card:hover { transform: translateY(-5px); box-shadow: 0 18px 40px rgba(7, 30, 90, 0.14); }
+
+.facility-card__media { overflow: hidden; aspect-ratio: 4 / 3; background: var(--surface); }
+.facility-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
+.facility-card:hover .facility-card__media img { transform: scale(1.06); }   /* gentle image zoom */
+
+.facility-card__body { display: flex; flex: 1; flex-direction: column; padding: var(--space-5); }
+.facility-card__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+  font-size: 1.2rem;
+  letter-spacing: -0.01em;
+  color: var(--blue-900);
+}
+.facility-card:nth-child(odd)  .icon-chip { --accent: var(--blue-600); --accent-soft: #e4edff; }
+.facility-card:nth-child(even) .icon-chip { --accent: #0b8a63; --accent-soft: #def5ec; }
+.facility-card__body p { color: var(--muted); }
+
+@media (max-width: 1023px) { .facilities__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 639px)  { .facilities__grid { grid-template-columns: 1fr; } }
+
+
+/* ==========================================================================
+   SECTION 9: NEWS AND UPCOMING EVENTS
+   Desktop: one large featured card on the left, three compact cards stacked on the right.
+   ========================================================================== */
+.news__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-5); }
+
+.news-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 6px 24px rgba(7, 30, 90, 0.08);
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+.news-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(7, 30, 90, 0.15); }
+
+.news-card__media { overflow: hidden; aspect-ratio: 16 / 9; background: var(--surface); }
+.news-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
+.news-card:hover .news-card__media img { transform: scale(1.05); }
+
+.news-card__body { display: flex; flex: 1; flex-direction: column; align-items: flex-start; padding: var(--space-5); }
+.news-card__title { margin: var(--space-3) 0 var(--space-2); font-size: 1.2rem; letter-spacing: -0.01em; color: var(--blue-900); }
+.news-card--featured .news-card__title { font-size: clamp(1.4rem, 2.4vw, 1.8rem); }
+.news-card__body p { color: var(--muted); }
+
+/* Date badge: coloured pill + a small "Sample" tag so no fake date looks real */
+.date-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.3rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 999px;
+}
+.date-badge__tag {
+  padding-left: var(--space-2);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-left: 1px solid rgba(20, 32, 51, 0.25);
+}
+
+@media (min-width: 1024px) {
+  .news__grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); grid-template-rows: repeat(3, auto); }
+  .news-card--featured { grid-row: 1 / span 3; }
+  .news-card--featured .news-card__media { flex: 1; aspect-ratio: auto; min-height: 280px; }
+
+  /* Small cards become horizontal: photo left, text right */
+  .news-card:not(.news-card--featured) { display: grid; grid-template-columns: minmax(0, 38%) minmax(0, 1fr); }
+  .news-card:not(.news-card--featured) .news-card__media { aspect-ratio: auto; height: 100%; min-height: 170px; }
+  .news-card:not(.news-card--featured) .news-card__body { padding: var(--space-4) var(--space-5); }
+  .news-card:not(.news-card--featured) .news-card__title { margin-block: var(--space-2) var(--space-1); font-size: 1.1rem; }
+  .news-card:not(.news-card--featured) .news-card__body p { font-size: 0.92rem; line-height: 1.5; }
+  .news-card:not(.news-card--featured) .card-link { padding-top: var(--space-2); }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .news__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .news-card--featured { grid-column: 1 / -1; }
+  .news-card--featured .news-card__media { aspect-ratio: 21 / 9; }
+  .news-card__body { padding: var(--space-4); }
+}
+
+
+/* ==========================================================================
+   SECTION 10: TESTIMONIALS
+   ========================================================================== */
+.testimonials__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); }
+
+.testimonial-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: var(--space-6) var(--space-5) var(--space-5);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.testimonial-card:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(7, 30, 90, 0.12); }
+
+.testimonial-card__quote {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  width: 44px;
+  height: 44px;
+  fill: var(--accent);
+  opacity: 0.18;
+}
+.testimonial-card__photo {
+  width: 72px;
+  height: 72px;
+  margin-bottom: var(--space-3);
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--accent);
+  background: var(--accent-soft);
+}
+
+.stars { display: flex; gap: 3px; margin-bottom: var(--space-3); }
+.stars svg { width: 20px; height: 20px; fill: #f5b301; }   /* gold stars */
+
+.testimonial-card__text { flex: 1; margin: 0 0 var(--space-5); }
+.testimonial-card__text p { font-style: italic; line-height: 1.8; color: var(--ink); }
+
+.testimonial-card__author { display: flex; flex-direction: column; padding-top: var(--space-4); border-top: 1px solid var(--line); }
+.testimonial-card__author strong { color: var(--accent); }
+.testimonial-card__author span { font-size: 0.875rem; color: var(--muted); }
+
+.testimonials__note { margin-top: var(--space-6); text-align: center; font-size: 0.85rem; font-style: italic; color: var(--muted); }
+
+@media (max-width: 1023px) {
+  .testimonials__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .testimonial-card:last-child { grid-column: 1 / -1; max-width: calc(50% - var(--space-5) / 2); justify-self: center; }
+}
+@media (max-width: 639px) {
+  .testimonials__grid { grid-template-columns: 1fr; }
+  .testimonial-card:last-child { max-width: none; }
+}
+
+
+/* ==========================================================================
+   SECTION 11: ADMISSION CTA
+   ========================================================================== */
+.admission-cta {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(4.5rem, 10vw, 8rem);
+  text-align: center;
+  color: var(--white);
+  background: var(--navy);
+}
+.admission-cta__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+.admission-cta__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(60% 90% at 85% 100%, rgba(52, 211, 153, 0.28), transparent 70%),
+    linear-gradient(135deg, rgba(5, 24, 70, 0.92) 0%, rgba(7, 62, 106, 0.86) 55%, rgba(8, 100, 112, 0.82) 100%);
+}
+
+.admission-cta__inner { max-width: 760px; }
+.admission-cta__title { font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 800; line-height: 1.08; letter-spacing: -0.03em; }
+.admission-cta__text { max-width: 34rem; margin: var(--space-5) auto var(--space-6); font-size: clamp(1.05rem, 1.8vw, 1.3rem); color: rgba(255, 255, 255, 0.92); }
+
+.btn--green {
+  min-height: 58px;
+  padding: 1rem 2rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #04261b;                      /* dark text for strong contrast on the green */
+  background: var(--green);
+  border-radius: 12px;
+}
+.btn--green:hover { background: #4ee0ac; box-shadow: 0 0 0 6px rgba(52, 211, 153, 0.25), 0 12px 30px rgba(52, 211, 153, 0.45); }
+.btn--green .btn__icon { transition: transform var(--transition); }
+.btn--green:hover .btn__icon { transform: translateX(4px); }
+
+.admission-cta__note { margin-top: var(--space-4); font-size: 0.92rem; color: rgba(255, 255, 255, 0.82); }
+
+@media (max-width: 479px) {
+  .btn--green { width: 100%; white-space: normal; }   /* full-width and always inside the screen */
+}
+
+
+/* ==========================================================================
+   SECTION 12: CONTACT US
+   ========================================================================== */
+.contact { background: var(--surface); }
+
+.contact__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: start;
+  gap: clamp(2rem, 6vw, 5.5rem);
+}
+
+.contact__title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; color: var(--blue-600); }
+.contact__subtitle { max-width: 34rem; margin-top: var(--space-4); font-size: 1.08rem; line-height: 1.75; color: var(--muted); }
+
+/* --- Contact details --- */
+.contact-list { display: flex; flex-direction: column; margin-top: var(--space-6); }
+.contact-item { display: flex; align-items: flex-start; gap: var(--space-4); padding-block: var(--space-4); border-bottom: 1px solid var(--line); }
+.contact-item:first-child { padding-top: 0; }
+.contact-item__icon { width: 48px; height: 48px; border-radius: 50%; }          /* softly round background */
+.contact-item__icon--green { --accent: #0b8a63; --accent-soft: #def5ec; }
+.contact-item__label { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.contact-item__value { margin-top: 2px; font-weight: 600; color: var(--ink); overflow-wrap: anywhere; }   /* long emails/addresses wrap instead of overflowing */
+
+.contact-link { transition: color var(--transition); background: linear-gradient(currentColor, currentColor) left bottom / 0 2px no-repeat; transition: color var(--transition), background-size 0.3s var(--ease); }
+.contact-link:hover, .contact-link:focus-visible { color: var(--blue-600); background-size: 100% 2px; }
+
+/* --- Social icons (shared by the Contact section and the footer) --- */
+.contact__social-title { margin: var(--space-6) 0 var(--space-3); font-size: 1.05rem; color: var(--blue-900); }
+.social-links { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.social-link {
+  display: inline-grid;
+  place-items: center;
+  width: 48px;                    /* comfortable tap size */
+  height: 48px;
+  color: var(--blue-600);
+  background: #e4edff;
+  border-radius: 14px;
+  transition: background-color var(--transition), color var(--transition), transform var(--transition);
+}
+.social-link svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.social-link:hover { color: var(--white); background: var(--blue-600); transform: translateY(-3px); }
+.social-links li:nth-child(even) .social-link { color: #0b8a63; background: #def5ec; }
+.social-links li:nth-child(even) .social-link:hover { color: var(--white); background: #0b8a63; }
+
+/* --- Form card --- */
+.contact-card {
+  padding: clamp(1.5rem, 3.5vw, 2.5rem);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 16px 48px rgba(7, 30, 90, 0.1);
+}
+.contact-card__title { font-size: 1.6rem; letter-spacing: -0.02em; color: var(--blue-900); }
+.contact-card__text { margin: var(--space-2) 0 var(--space-5); color: var(--muted); }
+
+.form { display: flex; flex-direction: column; gap: var(--space-4); }
+.form-field { display: flex; flex-direction: column; gap: 6px; }
+.form-field__label { font-size: 0.92rem; font-weight: 600; color: var(--ink); }
+.form-field__required { color: #c0392b; }
+.form-field__optional { font-weight: 400; color: var(--muted); }
+
+.form-field__control {
+  width: 100%;
+  min-height: 52px;
+  padding: 0.8rem var(--space-4);
+  font: inherit;
+  color: var(--ink);
+  background: var(--white);
+  border: 1.5px solid #c9d5ea;
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+textarea.form-field__control { min-height: 140px; resize: vertical; }
+.form-field__control::placeholder { color: #75829b; }
+.form-field__control:hover { border-color: #9db3d9; }
+.form-field__control:focus { outline: none; border-color: var(--blue-600); box-shadow: 0 0 0 4px rgba(29, 95, 216, 0.18); }
+
+/* Custom arrow for the select (appearance:none removes the browser's default one) */
+.form-field__control--select {
+  appearance: none;
+  padding-right: 2.75rem;
+  background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='m1 1.5 6 6 6-6' fill='none' stroke='%2352607a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 1rem center;
+}
+.form-field__control--select:invalid { color: #75829b; }       /* grey while the placeholder option is showing */
+.form-field__control--select option { color: var(--ink); }
+
+/* Error state: set by JavaScript through aria-invalid */
+.form-field__control[aria-invalid="true"] { border-color: #c0392b; background-color: #fff8f7; }
+.form-field__control[aria-invalid="true"]:focus { box-shadow: 0 0 0 4px rgba(192, 57, 43, 0.18); }
+.form-field__error { min-height: 0; font-size: 0.85rem; font-weight: 600; color: #b42318; }
+.form-field__error:empty { display: none; }
+
+.form__submit { align-self: stretch; min-height: 56px; margin-top: var(--space-2); font-size: 1.05rem; border-radius: var(--radius-md); }
+.form__submit:disabled { cursor: progress; opacity: 0.75; transform: none; box-shadow: none; }
+.form__submit.is-loading .form__submit-label::after {      /* small spinner while sending */
+  content: "";
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-left: 0.6em;
+  vertical-align: -0.15em;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-top-color: var(--white);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Result messages (used by both forms) */
+.form-status { padding: var(--space-3) var(--space-4); font-size: 0.92rem; font-weight: 600; border-radius: var(--radius-md); }
+.form-status--info    { color: #0a3a7a; background: #e4edff; border-left: 4px solid var(--blue-600); }
+.form-status--success { color: #0a5a40; background: #def5ec; border-left: 4px solid #0b8a63; }
+.form-status--error   { color: #8a1c12; background: #fdeceb; border-left: 4px solid #c0392b; }
+
+@media (max-width: 899px) {
+  .contact__inner { grid-template-columns: 1fr; }
+  .contact__subtitle { max-width: none; }
+}
+
+
+/* ==========================================================================
+   SECTION 13: FOOTER
+   ========================================================================== */
+.visually-hidden {               /* hidden visually, still read by screen readers */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.footer { color: #b9c5dc; background: var(--navy); }   /* light-gray-blue body text on deep navy */
+
+.footer__inner {
+  display: grid;
+  grid-template-columns: 1.1fr 0.7fr 1fr 1.5fr;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  padding-block: clamp(3rem, 7vw, 5rem) clamp(2.5rem, 5vw, 3.5rem);
+}
+.footer__col { min-width: 0; }
+
+.logo--light .logo__name { color: var(--white); }
+.logo--light .logo__tagline { color: var(--sky); }
+
+.footer__heading { margin-bottom: var(--space-5); font-size: 1.15rem; font-weight: 800; letter-spacing: -0.01em; color: var(--white); }
+.footer__description { margin-top: var(--space-4); max-width: 24rem; font-size: 0.95rem; line-height: 1.75; }
+.footer__col--about .social-links { margin-top: var(--space-5); }
+.footer__col:nth-child(4) .footer__description { margin-top: 0; }
+
+/* Social icons on the dark background */
+.social-links--dark .social-link { color: var(--white); background: rgba(255, 255, 255, 0.1); }
+.social-links--dark li:nth-child(even) .social-link { color: var(--white); background: rgba(255, 255, 255, 0.1); }
+.social-links--dark .social-link:hover,
+.social-links--dark li:nth-child(even) .social-link:hover { color: var(--white); background: var(--blue-600); }
+.social-links--dark li:nth-child(even) .social-link:hover { background: #0b8a63; }
+
+/* Quick links: the arrow slides in on hover */
+.footer-links { display: flex; flex-direction: column; gap: var(--space-1); }
+.footer-links a { display: flex; align-items: center; gap: var(--space-2); min-height: 40px; transition: color var(--transition), transform var(--transition); }
+.footer-links svg {
+  width: 16px;
+  height: 16px;
+  margin-left: -22px;
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: opacity var(--transition), margin-left var(--transition);
+}
+.footer-links a:hover, .footer-links a:focus-visible { color: var(--green); }
+.footer-links a:hover svg, .footer-links a:focus-visible svg { margin-left: 0; opacity: 1; }
+
+/* Contact details */
+.footer-contact { display: flex; flex-direction: column; gap: var(--space-4); }
+.footer-contact li { display: flex; align-items: flex-start; gap: var(--space-3); overflow-wrap: anywhere; }
+.footer-contact svg { flex: none; width: 20px; height: 20px; margin-top: 3px; fill: none; stroke: var(--green); stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.footer-contact a { transition: color var(--transition); }
+.footer-contact a:hover, .footer-contact a:focus-visible { color: var(--white); text-decoration: underline; text-underline-offset: 4px; }
+
+/* Newsletter */
+.newsletter { margin-top: var(--space-5); }
+.newsletter__row { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.newsletter__input {
+  flex: 1 1 170px;
+  min-width: 0;
+  min-height: 48px;
+  padding: 0.7rem var(--space-4);
+  font: inherit;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition), background-color var(--transition), box-shadow var(--transition);
+}
+.newsletter__input::placeholder { color: #93a3c2; }
+.newsletter__input:focus { outline: none; border-color: var(--green); background: rgba(255, 255, 255, 0.12); box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.22); }
+.newsletter__input[aria-invalid="true"] { border-color: #ff8a7a; }
+.newsletter__button {
+  flex: 0 0 auto;
+  min-height: 48px;
+  padding: 0.7rem 1.4rem;
+  font-weight: 800;
+  color: var(--white);
+  background: #0b8a63;            /* green with white text (contrast 4.6:1) */
+  border: 0;
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.newsletter__button:hover { background: #0ea274; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(11, 138, 99, 0.4); }
+.newsletter__button:disabled { cursor: progress; opacity: 0.7; transform: none; box-shadow: none; }
+.newsletter__error { margin-top: var(--space-2); font-size: 0.85rem; font-weight: 600; color: #ffb0a5; }
+.newsletter__error:empty { display: none; }
+.newsletter .form-status { margin-top: var(--space-3); }
+.form-status--dark.form-status--info    { color: #dbe8ff; background: rgba(47, 116, 234, 0.25); }
+.form-status--dark.form-status--success { color: #c9f7e5; background: rgba(52, 211, 153, 0.2); }
+.form-status--dark.form-status--error   { color: #ffd2cb; background: rgba(255, 138, 122, 0.2); }
+
+/* Bottom bar */
+.footer__bottom { border-top: 1px solid rgba(185, 197, 220, 0.2); }
+.footer__bottom-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3) var(--space-5); padding-block: var(--space-5); font-size: 0.9rem; }
+.footer__legal { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); }
+.footer__legal a { transition: color var(--transition); }
+.footer__legal a:hover, .footer__legal a:focus-visible { color: var(--green); }
+
+/* Focus rings need to be light on the dark footer */
+.footer :focus-visible { outline-color: var(--sky); }
+
+@media (max-width: 1023px) {
+  .footer__inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 639px) {
+  .footer__inner { grid-template-columns: 1fr; }
+  .footer__bottom-inner { flex-direction: column; text-align: center; }
+  .footer__legal { justify-content: center; }
+  .newsletter__button { flex: 1 1 100%; }          /* stacks under the input on narrow screens */
+}
+
+
+/* ==========================================================================
+   9. RESPONSIVE DESIGN
+   Mobile 320–767 · Tablet 768–1023 · Desktop 1024+
+   (The menu collapses at 1100px because seven links + CTA need that room.)
+   ========================================================================== */
+
+/* ---- Below 1100px: main menu hides, hamburger carries everything ---- */
+@media (max-width: 1100px) {
+  .main-nav { display: none; }
+  .navbar__inner { justify-content: space-between; }
+  .mega__quick { display: block; }
+}
+
+/* ---- Tablet and below (< 1024px) ---- */
+@media (max-width: 1023px) {
+  :root { --nav-height: 68px; }
+
+  /* Hero stacks: text first, picture second */
+  .hero__inner { grid-template-columns: 1fr; min-height: 0; gap: var(--space-7); }
+  .hero__content { max-width: 640px; }
+  .hero__media { max-width: 440px; }
+
+  /* Achievement card moves inside the photo so it can't cause sideways scroll */
+  .achievement-card { top: auto; right: var(--space-4); bottom: var(--space-4); }
+
+  /* Aurora runs top-to-bottom now: dark behind the text, light behind the photo */
+  .hero {
+    background:
+      radial-gradient(70% 40% at 90% 100%, rgba(52, 211, 153, 0.65), transparent 70%),
+      radial-gradient(70% 35% at 10% 95%,  rgba(255, 255, 255, 0.6),  transparent 70%),
+      radial-gradient(70% 35% at 0% 0%,    rgba(47, 116, 234, 0.7),   transparent 70%),
+      linear-gradient(180deg, #061b55 0%, #0a3596 45%, #2a7bd6 75%, #b4e4e0 100%);
+  }
+
+  /* Mega menu: categories become a swipeable row of pills above the links */
+  .mega__body { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .mega__categories {
+    flex-direction: row;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--gutter);
+    overflow-x: auto;                 /* scrolls inside the strip, never the page */
+    scrollbar-width: none;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .mega__categories::-webkit-scrollbar { display: none; }
+  .mega-tab {
+    width: auto;
+    flex: none;
+    white-space: nowrap;
+    min-height: 44px;
+    padding: 0.6rem var(--space-4);
+    border-left: 0;
+    border-radius: 999px;
+    background: var(--white);
+    border: 1px solid var(--line);
+  }
+  .mega-tab__num { display: none; }
+  .mega-tab.is-active { color: var(--white); background: var(--blue-600); border-color: var(--blue-600); box-shadow: none; }
+
+  .carousel__slide { aspect-ratio: 16 / 9; }
+}
+
+/* ---- Mobile (< 768px) ---- */
+@media (max-width: 767px) {
+  .logo__mark { width: 32px; }
+  .logo__name { font-size: 1.15rem; }
+  .logo__tagline { font-size: 0.62rem; }
+
+  /* The navbar CTA moves into the mega menu on small screens to leave room */
+  .navbar__cta { display: none; }
+
+  .hero__buttons .btn { flex: 1 1 100%; }          /* full-width, thumb-friendly */
+  .hero__media { max-width: 100%; }
+  .achievement-card { min-width: 140px; padding: var(--space-3) var(--space-4); }
+
+  .mega-panel { grid-template-columns: 1fr; gap: var(--space-5); }
+  .mega-panel__figure { min-height: 0; aspect-ratio: 16 / 9; order: 2; }
+  .mega-panel__links a { padding-block: 0.9rem; font-size: 1.05rem; }
+
+  .ticker { height: 54px; }
+
+  .carousel__slide { aspect-ratio: 4 / 3; }
+  .carousel__viewport { border-radius: var(--radius-lg); }
+  .carousel__caption { padding: var(--space-5) var(--space-4) var(--space-3); font-size: 0.875rem; }
+  .carousel__arrow { width: 44px; height: 44px; }
+}
+
+/* ---- Very small phones (≤ 400px) ---- */
+@media (max-width: 400px) {
+  .social-proof { flex-wrap: wrap; gap: var(--space-3); }
+  .social-proof__avatars img { width: 42px; height: 42px; }
+  .carousel__toggle { display: none; }               /* autoplay still pauses on touch/focus */
+}
+
+/* ---- Large desktop: slightly bigger hero rhythm ---- */
+@media (min-width: 1400px) {
+  :root { --container: 1280px; }
+}
+
+
+/* ==========================================================================
+   10. ACCESSIBILITY AND REDUCED MOTION
+   People who ask their device for less motion get no entrance animations,
+   a static ticker (still readable, scrolls manually), and instant transitions.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0s !important;
+  }
+
+  .js .reveal { opacity: 1; }
+
+  /* Ticker: stop the loop and let people scroll the strip by hand */
+  .ticker { overflow-x: auto; }
+  .ticker__track { animation: none; }
+  .ticker__group[aria-hidden="true"] { display: none; }
+  .ticker::before,
+  .ticker::after { display: none; }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Keyboard users can jump straight past the navigation -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ICON SPRITE: inline SVG icons reused across sections via <use href="#icon-name"> -->
+  <svg class="icon-sprite" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="icon-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></symbol>
+      <symbol id="icon-book-open" viewBox="0 0 24 24"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2zM22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></symbol>
+      <symbol id="icon-cap" viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5zM6 12v5c3 2 9 2 12 0v-5M22 10v6"/></symbol>
+      <symbol id="icon-teacher" viewBox="0 0 24 24"><path d="M2 3h20M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3M12 16v5M8 21h8"/></symbol>
+      <symbol id="icon-building" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6M12 10h.01"/></symbol>
+      <symbol id="icon-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></symbol>
+      <symbol id="icon-music" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM21 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></symbol>
+      <symbol id="icon-trophy" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.7V17c0 .6-.5 1-1.2 1.2C7.8 18.7 7 20.2 7 22M14 14.7V17c0 .6.5 1 1.2 1.2 1 .5 1.8 2 1.8 3.8M18 2H6v7a6 6 0 0 0 12 0V2z"/></symbol>
+      <symbol id="icon-books" viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v14H6.5A2.5 2.5 0 0 0 4 19.5zM4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></symbol>
+      <symbol id="icon-flask" viewBox="0 0 24 24"><path d="M10 2v7.5L4.5 19a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L14 9.5V2M8.5 2h7M7 16h10"/></symbol>
+      <symbol id="icon-monitor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
+      <symbol id="icon-ball" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m12 7 4 3-1.5 5h-5L8 10zM12 2v5M16 10l5-1.5M14.5 15l3 4M9.5 15l-3 4M8 10 3 8.5"/></symbol>
+      <symbol id="icon-board" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="1"/><path d="m8 20 2-4M16 20l-2-4"/></symbol>
+      <symbol id="icon-mic" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zM19 10v1a7 7 0 0 1-14 0v-1M12 18v4M8 22h8"/></symbol>
+      <symbol id="icon-quote" viewBox="0 0 24 24"><path d="M9.5 7C6.5 7 5 9 5 12v5h5v-5H7.5c0-1.6.8-2.6 2-2.9V7zM18.5 7c-3 0-4.5 2-4.5 5v5h5v-5h-2.5c0-1.6.8-2.6 2-2.9V7z"/></symbol>
+      <symbol id="icon-star" viewBox="0 0 24 24"><path d="m12 2.5 2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9L12 2.5z"/></symbol>
+      <symbol id="icon-pin" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+      <symbol id="icon-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+      <symbol id="icon-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol>
+      <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+      <symbol id="icon-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+      <symbol id="icon-facebook" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol>
+      <symbol id="icon-instagram" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01"/></symbol>
+      <symbol id="icon-x" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></symbol>
+      <symbol id="icon-youtube" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><path d="m9.75 15.02 5.75-3.27-5.75-3.27z"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- ====================================================================
+       IMAGE GUIDE: every <img> below points to assets/images/.
+       To swap a photo, replace the file (or change the src) – nothing else needs editing.
+       ==================================================================== -->
+
+  <!-- SECTION 1: NAVIGATION BAR - START -->
+  <header class="navbar" id="top">
+    <div class="navbar__inner container">
+
+      <!-- A. Logo (inline SVG: shield + open book + star) -->
+      <a class="logo" href="#home" aria-label="Crestview Academy – home">
+        <svg class="logo__mark" viewBox="0 0 48 56" role="img" aria-hidden="true" focusable="false">
+          <path d="M24 2 4 9v17c0 14 8.6 24.2 20 28 11.4-3.8 20-14 20-28V9L24 2Z" fill="#1d5fd8"/>
+          <path d="M24 2 4 9v17c0 14 8.6 24.2 20 28V2Z" fill="#164bb0"/>
+          <path d="M11 24.5c4.2-1.6 8.6-1.4 13 1.2 4.4-2.6 8.8-2.8 13-1.2V38c-4.2-1.5-8.6-1.2-13 1.4-4.4-2.6-8.8-2.9-13-1.4V24.5Z" fill="#fff"/>
+          <path d="M24 25.7v13.7" stroke="#1d5fd8" stroke-width="1.6"/>
+          <path d="m24 9.5 2.1 4.3 4.7.7-3.4 3.3.8 4.7-4.2-2.2-4.2 2.2.8-4.7-3.4-3.3 4.7-.7L24 9.5Z" fill="#ffc928"/>
+        </svg>
+        <span class="logo__text">
+          <span class="logo__name">Crestview</span>
+          <span class="logo__tagline">Academy</span>
+        </span>
+      </a>
+
+      <!-- B. Main navigation (hidden below 1100px; those links reappear inside the mega menu) -->
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul class="main-nav__list">
+          <li><a class="main-nav__link is-active" href="#home" aria-current="page">Home</a></li>
+          <li><a class="main-nav__link" href="about.html">About Us</a></li>
+          <li><a aria-disabled="true" class="main-nav__link is-disabled">Courses</a></li>
+          <li><a aria-disabled="true" class="main-nav__link is-disabled">Result</a></li>
+          <li><a aria-disabled="true" class="main-nav__link is-disabled">Faculty</a></li>
+          <li><a aria-disabled="true" class="main-nav__link is-disabled">Gallery</a></li>
+          <li><a class="main-nav__link" href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
+
+      <!-- C + D. CTA button and hamburger -->
+      <div class="navbar__actions">
+        <a class="btn btn--yellow navbar__cta" href="contact.html">Book Free Demo Class</a>
+        <button class="hamburger" id="menu-toggle" type="button"
+                aria-label="Open menu" aria-expanded="false" aria-controls="mega-menu">
+          <span class="hamburger__bar"></span>
+          <span class="hamburger__bar"></span>
+          <span class="hamburger__bar"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Slide-in mega menu (sits inside the header but is position: fixed) -->
+    <div class="mega" id="mega">
+      <div class="mega__overlay" id="mega-overlay"></div>
+
+      <aside class="mega__panel" id="mega-menu" role="dialog" aria-modal="true"
+             aria-label="Site menu" aria-hidden="true" inert>
+
+        <div class="mega__header">
+          <span class="mega__title">Explore Crestview</span>
+          <!-- Sits exactly where the hamburger is, so it also reads as "tap the burger again to close" -->
+          <button class="mega__close" id="mega-close" type="button" aria-label="Close menu">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+              <path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="mega__body">
+
+          <!-- Six main categories (tabs) -->
+          <div class="mega__categories" role="tablist" aria-label="Menu categories" aria-orientation="vertical">
+            <button class="mega-tab is-active" role="tab" type="button" id="tab-about"
+                    aria-selected="true" aria-controls="panel-about"><span class="mega-tab__num">01</span>About the School</button>
+            <button class="mega-tab" role="tab" type="button" id="tab-academics"
+                    aria-selected="false" aria-controls="panel-academics" tabindex="-1"><span class="mega-tab__num">02</span>Academics</button>
+            <button class="mega-tab" role="tab" type="button" id="tab-admissions"
+                    aria-selected="false" aria-controls="panel-admissions" tabindex="-1"><span class="mega-tab__num">03</span>Admissions</button>
+            <button class="mega-tab" role="tab" type="button" id="tab-student-life"
+                    aria-selected="false" aria-controls="panel-student-life" tabindex="-1"><span class="mega-tab__num">04</span>Student Life</button>
+            <button class="mega-tab" role="tab" type="button" id="tab-community"
+                    aria-selected="false" aria-controls="panel-community" tabindex="-1"><span class="mega-tab__num">05</span>Our Community</button>
+            <button class="mega-tab" role="tab" type="button" id="tab-resources"
+                    aria-selected="false" aria-controls="panel-resources" tabindex="-1"><span class="mega-tab__num">06</span>Resources</button>
+          </div>
+
+          <!-- Submenu area: five links + one image per category -->
+          <div class="mega__content">
+
+            <div class="mega-panel" role="tabpanel" id="panel-about" aria-labelledby="tab-about">
+              <ul class="mega-panel__links">
+                <li><a aria-disabled="true" class="is-disabled">Our History</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Mission and Vision</a></li>
+                <li><a aria-disabled="true" class="is-disabled">School Leadership</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Accreditation</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Why Choose Us?</a></li>
+              </ul>
+              <figure class="mega-panel__figure">
+                <img src="https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?auto=format&fit=crop&q=75&w=800" width="800" height="1000" alt="A bright, modern school building" loading="lazy">
+              </figure>
+            </div>
+
+            <div class="mega-panel" role="tabpanel" id="panel-academics" aria-labelledby="tab-academics" hidden>
+              <ul class="mega-panel__links">
+                <li><a href="primary.html">Primary Education</a></li>
+                <li><a href="secondary.html">Secondary Education</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Curriculum</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Academic Calendar</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Learning Approach</a></li>
+              </ul>
+              <figure class="mega-panel__figure">
+                <img src="https://images.unsplash.com/photo-1741708011528-e4874c6d869e?auto=format&fit=crop&q=75&w=800" width="800" height="1000" alt="Tall wooden bookshelves filled with books" loading="lazy">
+              </figure>
+            </div>
+
+            <div class="mega-panel" role="tabpanel" id="panel-admissions" aria-labelledby="tab-admissions" hidden>
+              <ul class="mega-panel__links">
+                <li><a aria-disabled="true" class="is-disabled">Admission Requirements</a></li>
+                <li><a aria-disabled="true" class="is-disabled">How to Apply</a></li>
+                <li><a aria-disabled="true" class="is-disabled">School Fees</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Scholarships</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Book a School Tour</a></li>
+              </ul>
+              <figure class="mega-panel__figure">
+                <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&q=75&w=800" width="800" height="1000" alt="An empty classroom with desks and a chalkboard" loading="lazy">
+              </figure>
+            </div>
+
+            <div class="mega-panel" role="tabpanel" id="panel-student-life" aria-labelledby="tab-student-life" hidden>
+              <ul class="mega-panel__links">
+                <li><a aria-disabled="true" class="is-disabled">Clubs and Societies</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Sports and Athletics</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Student Leadership</a></li>
+                <li><a aria-disabled="true" class="is-disabled">School Events</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Student Support</a></li>
+              </ul>
+              <figure class="mega-panel__figure">
+                <img src="https://images.unsplash.com/photo-1761039808159-f02b58f07032?auto=format&fit=crop&q=75&w=800" width="800" height="1000" alt="Children sitting in a circle for an outdoor activity" loading="lazy">
+              </figure>
+            </div>
+
+            <div class="mega-panel" role="tabpanel" id="panel-community" aria-labelledby="tab-community" hidden>
+              <ul class="mega-panel__links">
+                <li><a aria-disabled="true" class="is-disabled">Meet Our Teachers</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Parents and Guardians</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Alumni Network</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Community Outreach</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Student Achievements</a></li>
+              </ul>
+              <figure class="mega-panel__figure">
+                <img src="https://images.unsplash.com/photo-1633734973050-d6499a977c17?auto=format&fit=crop&q=75&w=800" width="800" height="1000" alt="Graduates celebrating in light blue gowns" loading="lazy">
+              </figure>
+            </div>
+
+            <div class="mega-panel" role="tabpanel" id="panel-resources" aria-labelledby="tab-resources" hidden>
+              <ul class="mega-panel__links">
+                <li><a href="library.html">Learning Resources</a></li>
+                <li><a href="announcements.html">News and Updates</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Frequently Asked Questions</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Downloadable Documents</a></li>
+                <li><a href="contact.html">Contact Support</a></li>
+              </ul>
+              <figure class="mega-panel__figure">
+                <img src="https://images.unsplash.com/photo-1637681068516-2b22116e68cf?auto=format&fit=crop&q=75&w=800" width="800" height="1000" alt="Stacks of books" loading="lazy">
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick links: only shown on screens where the main navigation bar is hidden -->
+        <nav class="mega__quick" aria-label="Quick links">
+          <ul class="mega__quick-list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a aria-disabled="true" class="is-disabled">Courses</a></li>
+            <li><a aria-disabled="true" class="is-disabled">Result</a></li>
+            <li><a aria-disabled="true" class="is-disabled">Faculty</a></li>
+            <li><a aria-disabled="true" class="is-disabled">Gallery</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+          <a class="btn btn--yellow mega__quick-cta" href="contact.html">Book Free Demo Class</a>
+        </nav>
+      </aside>
+    </div>
+  </header>
+  <!-- SECTION 1: NAVIGATION BAR - END -->
+
+
+  <main id="main-content">
+
+    <!-- SECTION 2: HERO SECTION - START -->
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <div class="hero__inner container">
+
+        <!-- Left column: text, buttons, social proof -->
+        <div class="hero__content">
+          <p class="hero__eyebrow anim-left delay-1">SHAPE OF FUTURE</p>
+
+          <h1 class="hero__title anim-left delay-2" id="hero-title">
+            <span class="hero__title-line hero__title-line--white">Inspiring Minds.</span>
+            <span class="hero__title-line hero__title-line--blue">Shaping Futures</span>
+          </h1>
+
+          <p class="hero__description anim-left delay-3">
+            A private education that empowers students to excel academically, lead confidently, and make a meaningful impact.
+          </p>
+
+          <div class="hero__buttons anim-left delay-4">
+            <a class="btn btn--blue" href="#courses">Explore Courses</a>
+            <a class="btn btn--ghost" id="video-link" href="https://youtu.be/BhKSPxDbrAc" target="_blank" rel="noopener noreferrer">
+              <svg class="btn__icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+                <circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M10 8.2v7.6l6.2-3.8L10 8.2Z" fill="currentColor"/>
+              </svg>
+              Watch Video <span class="visually-hidden">(opens YouTube in a new tab)</span>
+            </a>
+          </div>
+
+          <div class="social-proof anim-left delay-5">
+            <ul class="social-proof__avatars" aria-hidden="true">
+              <li><img src="https://images.unsplash.com/photo-1534597422092-8a84f1b45a9c?auto=format&fit=crop&q=75&w=160" width="48" height="48" alt=""></li>
+              <li><img src="https://images.unsplash.com/photo-1582848155369-d5f409351a42?auto=format&fit=crop&q=75&w=160" width="48" height="48" alt=""></li>
+              <li><img src="https://images.unsplash.com/photo-1729691031378-d63d7e81bb38?auto=format&fit=crop&q=75&w=160" width="48" height="48" alt=""></li>
+              <li><img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&q=75&w=160" width="48" height="48" alt=""></li>
+            </ul>
+            <p class="social-proof__text">Join 5,000 Successful Students</p>
+          </div>
+        </div>
+
+        <!-- Right column: student photo + overlapping achievement card -->
+        <div class="hero__media">
+          <figure class="hero__photo anim-top">
+            <img src="https://images.unsplash.com/photo-1765650113773-0752556dcea0?auto=format&fit=crop&q=75&w=1000" width="1000" height="1250"
+                 alt="A smiling student with a backpack holding a notebook">
+          </figure>
+          <div class="achievement-card anim-fade">
+            <p class="achievement-card__number">20+</p>
+            <p class="achievement-card__label">Years of Excellence</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SECTION 2: HERO SECTION - END -->
+
+
+    <!-- SECTION 3: TICKER SECTION - START -->
+    <!-- SECTION 3: TICKER SECTION -->
+    <section class="ticker" aria-label="School values">
+      <!--
+        The track holds TWO identical groups. The CSS animation moves the track left by exactly
+        50% (one full group), then restarts – the second group is in the exact spot the first
+        started, so the loop has no visible jump. Each group repeats the five messages twice so
+        it is always wider than very large screens. The second group is hidden from screen readers.
+      -->
+      <div class="ticker__track">
+        <ul class="ticker__group">
+          <li class="ticker__item">Knowledge Is Power</li>
+          <li class="ticker__item">Your Future Starts Here</li>
+          <li class="ticker__item">Diversity and Excellence</li>
+          <li class="ticker__item">Nurturing Great Minds</li>
+          <li class="ticker__item">Shaping Tomorrow's Leaders</li>
+          <li class="ticker__item" aria-hidden="true">Knowledge Is Power</li>
+          <li class="ticker__item" aria-hidden="true">Your Future Starts Here</li>
+          <li class="ticker__item" aria-hidden="true">Diversity and Excellence</li>
+          <li class="ticker__item" aria-hidden="true">Nurturing Great Minds</li>
+          <li class="ticker__item" aria-hidden="true">Shaping Tomorrow's Leaders</li>
+        </ul>
+        <ul class="ticker__group" aria-hidden="true">
+          <li class="ticker__item">Knowledge Is Power</li>
+          <li class="ticker__item">Your Future Starts Here</li>
+          <li class="ticker__item">Diversity and Excellence</li>
+          <li class="ticker__item">Nurturing Great Minds</li>
+          <li class="ticker__item">Shaping Tomorrow's Leaders</li>
+          <li class="ticker__item">Knowledge Is Power</li>
+          <li class="ticker__item">Your Future Starts Here</li>
+          <li class="ticker__item">Diversity and Excellence</li>
+          <li class="ticker__item">Nurturing Great Minds</li>
+          <li class="ticker__item">Shaping Tomorrow's Leaders</li>
+        </ul>
+      </div>
+    </section>
+    <!-- SECTION 3: TICKER SECTION - END -->
+
+
+    <!-- SECTION 4: CAROUSEL SECTION - START -->
+    <!-- SECTION 4: CAROUSEL SECTION -->
+    <section class="carousel-section" id="campus-life" aria-labelledby="carousel-title">
+      <div class="container">
+        <header class="carousel-section__header">
+          <p class="carousel-section__eyebrow">LIFE AT CRESTVIEW</p>
+          <h2 class="carousel-section__title" id="carousel-title">Where curiosity meets confidence</h2>
+        </header>
+
+        <div class="carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="Campus life photos">
+          <div class="carousel__viewport">
+            <div class="carousel__track" id="carousel-track" aria-live="off">
+
+              <figure class="carousel__slide" role="group" aria-roledescription="slide" aria-label="1 of 5">
+                <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=75&w=1600" width="1600" height="900" alt="Students in a classroom with a teacher presenting">
+                <figcaption class="carousel__caption">Engaging classrooms</figcaption>
+              </figure>
+
+              <figure class="carousel__slide" role="group" aria-roledescription="slide" aria-label="2 of 5">
+                <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=75&w=1600" width="1600" height="900" alt="A teacher standing in front of a class of children" loading="lazy">
+                <figcaption class="carousel__caption">Teachers who care</figcaption>
+              </figure>
+
+              <figure class="carousel__slide" role="group" aria-roledescription="slide" aria-label="3 of 5">
+                <img src="https://images.unsplash.com/photo-1707944745899-104a4b12d945?auto=format&fit=crop&q=75&w=1600" width="1600" height="900" alt="People working together in a science laboratory" loading="lazy">
+                <figcaption class="carousel__caption">Hands-on science</figcaption>
+              </figure>
+
+              <figure class="carousel__slide" role="group" aria-roledescription="slide" aria-label="4 of 5">
+                <img src="https://images.unsplash.com/photo-1765372674571-afef5d3771b2?auto=format&fit=crop&q=75&w=1600" width="1600" height="900" alt="Young people playing football on a field" loading="lazy">
+                <figcaption class="carousel__caption">Sports and teamwork</figcaption>
+              </figure>
+
+              <figure class="carousel__slide" role="group" aria-roledescription="slide" aria-label="5 of 5">
+                <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&q=75&w=1600" width="1600" height="900" alt="A student drawing at a desk in class" loading="lazy">
+                <figcaption class="carousel__caption">Learning together</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <!-- Controls sit below the photo so they never cover the images -->
+          <div class="carousel__controls">
+            <div class="carousel__dots" role="group" aria-label="Choose a slide">
+              <button class="carousel__dot is-active" type="button" aria-label="Go to slide 1" aria-current="true"></button>
+              <button class="carousel__dot" type="button" aria-label="Go to slide 2"></button>
+              <button class="carousel__dot" type="button" aria-label="Go to slide 3"></button>
+              <button class="carousel__dot" type="button" aria-label="Go to slide 4"></button>
+              <button class="carousel__dot" type="button" aria-label="Go to slide 5"></button>
+            </div>
+
+            <div class="carousel__buttons">
+              <button class="carousel__toggle" id="carousel-toggle" type="button" aria-label="Pause automatic slide show">
+                <svg class="icon-pause" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg>
+                <svg class="icon-play" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8 5.5v13L18.5 12 8 5.5Z" fill="currentColor"/></svg>
+              </button>
+              <button class="carousel__arrow carousel__arrow--prev" id="carousel-prev" type="button" aria-label="Previous slide">
+                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="m14.5 5-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="carousel__arrow carousel__arrow--next" id="carousel-next" type="button" aria-label="Next slide">
+                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="m9.5 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SECTION 4: CAROUSEL SECTION - END -->
+
+
+    <!-- SECTION 5: ABOUT US - START -->
+    <section class="about" id="about" aria-labelledby="about-title">
+      <!-- Full-section background photo + dark navy overlay (the overlay is in the CSS: .about__overlay) -->
+      <img class="about__bg" src="https://images.unsplash.com/photo-1604134967494-8a9ed3adea0d?auto=format&fit=crop&q=75&w=1920" width="1920" height="1080" alt="" loading="lazy">
+      <div class="about__overlay" aria-hidden="true"></div>
+
+      <div class="about__inner container">
+
+        <!-- Left column: logo + name, heading, circular photo -->
+        <div class="about__intro reveal">
+          <div class="about__brand">
+            <svg class="about__brand-mark" viewBox="0 0 48 56" aria-hidden="true" focusable="false">
+              <path d="M24 2 4 9v17c0 14 8.6 24.2 20 28 11.4-3.8 20-14 20-28V9L24 2Z" fill="#fff"/>
+              <path d="M11 24.5c4.2-1.6 8.6-1.4 13 1.2 4.4-2.6 8.8-2.8 13-1.2V38c-4.2-1.5-8.6-1.2-13 1.4-4.4-2.6-8.8-2.9-13-1.4V24.5Z" fill="#0a3596"/>
+              <path d="m24 9.5 2.1 4.3 4.7.7-3.4 3.3.8 4.7-4.2-2.2-4.2 2.2.8-4.7-3.4-3.3 4.7-.7L24 9.5Z" fill="#ffc928"/>
+            </svg>
+            <span class="about__brand-name">Crestview Academy</span>
+          </div>
+
+          <h2 class="about__title" id="about-title">About Us</h2>
+
+          <img class="about__circle" src="https://images.unsplash.com/photo-1560130958-0ea787c275de?auto=format&fit=crop&q=75&w=400" width="200" height="200"
+               alt="A young child drawing at a desk" loading="lazy">
+        </div>
+
+        <!-- Right column: copy, sample statistics, link -->
+        <div class="about__content reveal delay-2">
+          <p>Crestview Academy is a private school built on a simple belief: every child learns best when they feel known, challenged and supported. Our teaching blends strong academic foundations with character development, so students grow into curious thinkers and confident, responsible young people.</p>
+          <p>For over two decades we have welcomed families into a close-knit learning community. Our qualified teachers, small class sizes and caring pastoral team help students achieve strong academic results while discovering talents in sport, the arts and leadership.</p>
+
+          <dl class="about__stats">
+            <div class="about__stat"><dt>Years of experience</dt><dd>20+</dd></div>
+            <div class="about__stat"><dt>Students</dt><dd>5,000+</dd></div>
+            <div class="about__stat"><dt>Qualified teachers</dt><dd>120</dd></div>
+            <div class="about__stat"><dt>Academic awards</dt><dd>50+</dd></div>
+          </dl>
+          <!-- Sample numbers: replace with your school's verified figures -->
+          <p class="about__note">Sample figures – replace with the school's verified data.</p>
+
+          <a class="about__link" href="about.html">Read More →</a>
+        </div>
+      </div>
+    </section>
+    <!-- SECTION 5: ABOUT US - END -->
+
+
+    <!-- SECTION 6: ACADEMIC PROGRAMS - START -->
+    <section class="programs section" id="courses" aria-labelledby="programs-title">
+      <div class="container">
+        <header class="section-heading reveal">
+          <h2 class="section-heading__title" id="programs-title">Academic Programs</h2>
+          <p class="section-heading__subtitle">Discover a learning pathway designed to inspire curiosity, build confidence, and prepare every child for the future.</p>
+        </header>
+
+        <div class="programs__grid">
+
+          <article class="program-card program-card--green reveal">
+            <img class="program-card__image" src="https://images.unsplash.com/photo-1620398722262-969d8f2bc875?auto=format&fit=crop&q=75&w=900" width="900" height="675"
+                 alt="A child colouring a butterfly drawing with a crayon" loading="lazy">
+            <div class="program-card__body">
+              <span class="icon-chip" aria-hidden="true"><svg><use href="#icon-smile"/></svg></span>
+              <h3 class="program-card__title">Nursery</h3>
+              <p class="program-card__text">A warm and nurturing environment where young learners explore, play, and develop essential early-learning skills.</p>
+              <a class="card-link" href="nursery.html">Learn More →</a>
+            </div>
+          </article>
+
+          <article class="program-card program-card--blue reveal delay-2">
+            <img class="program-card__image" src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&q=75&w=900" width="900" height="675"
+                 alt="A young student drawing at a desk" loading="lazy">
+            <div class="program-card__body">
+              <span class="icon-chip" aria-hidden="true"><svg><use href="#icon-book-open"/></svg></span>
+              <h3 class="program-card__title">Primary</h3>
+              <p class="program-card__text">Building strong foundations in literacy, numeracy, creativity, and critical thinking through engaging learning experiences.</p>
+              <a class="card-link" href="primary.html">Learn More →</a>
+            </div>
+          </article>
+
+          <article class="program-card program-card--teal reveal delay-3">
+            <img class="program-card__image" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=75&w=900" width="900" height="675"
+                 alt="Students and a teacher in a classroom" loading="lazy">
+            <div class="program-card__body">
+              <span class="icon-chip" aria-hidden="true"><svg><use href="#icon-cap"/></svg></span>
+              <h3 class="program-card__title">Secondary</h3>
+              <p class="program-card__text">Preparing students for academic achievement, responsible leadership, and future opportunities through quality education.</p>
+              <a class="card-link" href="secondary.html">Learn More →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <!-- SECTION 6: ACADEMIC PROGRAMS - END -->
+
+
+    <!-- SECTION 7: WHY CHOOSE OUR SCHOOL - START -->
+    <section class="why section section--tint" id="why-choose-us" aria-labelledby="why-title">
+      <div class="container">
+        <header class="section-heading reveal">
+          <h2 class="section-heading__title" id="why-title">Why Choose Our School</h2>
+          <p class="section-heading__subtitle">We combine quality teaching, modern learning environments, and holistic development to help every student thrive.</p>
+        </header>
+
+        <ul class="why__grid">
+          <li class="feature-card feature-card--blue reveal">
+            <span class="icon-chip icon-chip--lg" aria-hidden="true"><svg><use href="#icon-teacher"/></svg></span>
+            <h3 class="feature-card__title">Qualified Teachers</h3>
+            <p>Our dedicated educators provide engaging instruction and personalized guidance to support every learner's progress.</p>
+          </li>
+          <li class="feature-card feature-card--green reveal delay-1">
+            <span class="icon-chip icon-chip--lg" aria-hidden="true"><svg><use href="#icon-building"/></svg></span>
+            <h3 class="feature-card__title">Modern Facilities</h3>
+            <p>Our learning spaces and educational resources are designed to encourage curiosity, collaboration, and practical learning.</p>
+          </li>
+          <li class="feature-card feature-card--teal reveal delay-2">
+            <span class="icon-chip icon-chip--lg" aria-hidden="true"><svg><use href="#icon-heart"/></svg></span>
+            <h3 class="feature-card__title">Student Support</h3>
+            <p>We encourage students to develop confidence, build positive relationships, and seek guidance whenever they need it.</p>
+          </li>
+          <li class="feature-card feature-card--green reveal delay-1">
+            <span class="icon-chip icon-chip--lg" aria-hidden="true"><svg><use href="#icon-music"/></svg></span>
+            <h3 class="feature-card__title">Extracurricular Activities</h3>
+            <p>Sports, clubs, creative activities, and leadership opportunities help students discover their talents beyond the classroom.</p>
+          </li>
+          <li class="feature-card feature-card--blue reveal delay-2">
+            <span class="icon-chip icon-chip--lg" aria-hidden="true"><svg><use href="#icon-trophy"/></svg></span>
+            <h3 class="feature-card__title">Academic Excellence</h3>
+            <p>We promote strong academic foundations, critical thinking, discipline, and a lifelong passion for learning.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <!-- SECTION 7: WHY CHOOSE OUR SCHOOL - END -->
+
+
+    <!-- SECTION 8: SCHOOL FACILITIES - START -->
+    <section class="facilities section" id="gallery" aria-labelledby="facilities-title">
+      <div class="container">
+        <header class="section-heading reveal">
+          <h2 class="section-heading__title" id="facilities-title">School Facilities</h2>
+          <p class="section-heading__subtitle">Explore the spaces and resources that make learning engaging, practical, and inspiring.</p>
+        </header>
+
+        <div class="facilities__grid">
+
+          <article class="facility-card reveal">
+            <div class="facility-card__media"><img src="https://images.unsplash.com/photo-1741708011528-e4874c6d869e?auto=format&fit=crop&q=75&w=900" width="900" height="675" alt="A school library with bookshelves and reading tables" loading="lazy"></div>
+            <div class="facility-card__body">
+              <h3 class="facility-card__title"><span class="icon-chip icon-chip--sm" aria-hidden="true"><svg><use href="#icon-books"/></svg></span>Library</h3>
+              <p>A welcoming space for reading, research, independent study, and discovery.</p>
+              <a class="card-link" href="library.html">View More →</a>
+            </div>
+          </article>
+
+          <article class="facility-card reveal delay-1">
+            <div class="facility-card__media"><img src="https://images.unsplash.com/photo-1707944746058-4da338d0f827?auto=format&fit=crop&q=75&w=900" width="900" height="675" alt="People working in a science laboratory" loading="lazy"></div>
+            <div class="facility-card__body">
+              <h3 class="facility-card__title"><span class="icon-chip icon-chip--sm" aria-hidden="true"><svg><use href="#icon-flask"/></svg></span>Science Laboratories</h3>
+              <p>Practical learning spaces that encourage scientific exploration and experimentation.</p>
+              <a class="card-link" href="#facility-science">View More →</a>
+            </div>
+          </article>
+
+          <article class="facility-card reveal delay-2">
+            <div class="facility-card__media"><img src="https://images.unsplash.com/photo-1719159381981-1327b22aff9b?auto=format&fit=crop&q=75&w=900" width="900" height="675" alt="Students working at computers in a school computer lab" loading="lazy"></div>
+            <div class="facility-card__body">
+              <h3 class="facility-card__title"><span class="icon-chip icon-chip--sm" aria-hidden="true"><svg><use href="#icon-monitor"/></svg></span>Computer Rooms</h3>
+              <p>Technology-enabled spaces that develop digital literacy and essential computing skills.</p>
+              <a class="card-link" href="#facility-computer">View More →</a>
+            </div>
+          </article>
+
+          <article class="facility-card reveal">
+            <div class="facility-card__media"><img src="https://images.unsplash.com/photo-1765372674571-afef5d3771b2?auto=format&fit=crop&q=75&w=900" width="900" height="675" alt="A school sports field" loading="lazy"></div>
+            <div class="facility-card__body">
+              <h3 class="facility-card__title"><span class="icon-chip icon-chip--sm" aria-hidden="true"><svg><use href="#icon-ball"/></svg></span>Sports Facilities</h3>
+              <p>Facilities that promote physical fitness, teamwork, sportsmanship, and healthy living.</p>
+              <a class="card-link" href="#facility-sports">View More →</a>
+            </div>
+          </article>
+
+          <article class="facility-card reveal delay-1">
+            <div class="facility-card__media"><img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&q=75&w=900" width="900" height="675" alt="A classroom with desks and a chalkboard" loading="lazy"></div>
+            <div class="facility-card__body">
+              <h3 class="facility-card__title"><span class="icon-chip icon-chip--sm" aria-hidden="true"><svg><use href="#icon-board"/></svg></span>Classrooms</h3>
+              <p>Comfortable learning spaces designed to encourage participation and collaboration.</p>
+              <a class="card-link" href="#facility-classrooms">View More →</a>
+            </div>
+          </article>
+
+          <article class="facility-card reveal delay-2">
+            <div class="facility-card__media"><img src="https://images.unsplash.com/photo-1761618291331-535983ae4296?auto=format&fit=crop&q=75&w=900" width="900" height="675" alt="A stage performance with an audience in a theatre" loading="lazy"></div>
+            <div class="facility-card__body">
+              <h3 class="facility-card__title"><span class="icon-chip icon-chip--sm" aria-hidden="true"><svg><use href="#icon-mic"/></svg></span>Auditorium</h3>
+              <p>A shared space for school assemblies, performances, presentations, and celebrations.</p>
+              <a class="card-link" href="auditorium.html">View More →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <!-- SECTION 8: SCHOOL FACILITIES - END -->
+
+
+    <!-- SECTION 9: NEWS AND UPCOMING EVENTS - START -->
+    <section class="news section section--tint" id="news" aria-labelledby="news-title">
+      <div class="container">
+        <header class="section-heading reveal">
+          <h2 class="section-heading__title" id="news-title">News and Upcoming Events</h2>
+          <p class="section-heading__subtitle">Stay connected with the latest school announcements, student achievements, competitions, and upcoming activities.</p>
+        </header>
+
+        <!-- Dates below are SAMPLE dates (marked "Sample"). Replace with real ones. Each "Read More" link is a placeholder for a future article page. -->
+        <div class="news__grid">
+
+          <article class="news-card news-card--featured reveal">
+            <div class="news-card__media"><img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=75&w=1200" width="1200" height="800" alt="A group gathered in a room with a projector screen" loading="lazy"></div>
+            <div class="news-card__body">
+              <span class="date-badge date-badge--blue"><time datetime="2026-11-02">2 Nov 2026</time><span class="date-badge__tag">Sample</span></span>
+              <h3 class="news-card__title">School Announcements</h3>
+              <p>Get important updates about school activities, academic schedules, and notices for parents and students.</p>
+              <a class="card-link" href="announcements.html">Read More →</a>
+            </div>
+          </article>
+
+          <article class="news-card reveal delay-1">
+            <div class="news-card__media"><img src="https://images.unsplash.com/photo-1583787035686-91b82ad5d811?auto=format&fit=crop&q=75&w=900" width="900" height="675" alt="People standing on a lit stage" loading="lazy"></div>
+            <div class="news-card__body">
+              <span class="date-badge date-badge--green"><time datetime="2026-11-14">14 Nov 2026</time><span class="date-badge__tag">Sample</span></span>
+              <h3 class="news-card__title">Upcoming Events</h3>
+              <p>Find out about school celebrations, parent meetings, academic activities, and special events.</p>
+              <a class="card-link" href="#news-events">Read More →</a>
+            </div>
+          </article>
+
+          <article class="news-card reveal delay-2">
+            <div class="news-card__media"><img src="https://images.unsplash.com/photo-1578269174936-2709b6aeb913?auto=format&fit=crop&q=75&w=900" width="900" height="675" alt="A yellow and white trophy" loading="lazy"></div>
+            <div class="news-card__body">
+              <span class="date-badge date-badge--teal"><time datetime="2026-11-21">21 Nov 2026</time><span class="date-badge__tag">Sample</span></span>
+              <h3 class="news-card__title">Competitions</h3>
+              <p>Celebrate student talent, teamwork, creativity, and achievement across academic and extracurricular competitions.</p>
+              <a class="card-link" href="#news-competitions">Read More →</a>
+            </div>
+          </article>
+
+          <article class="news-card reveal delay-3">
+            <div class="news-card__media"><img src="https://images.unsplash.com/photo-1590012314607-cda9d9b699ae?auto=format&fit=crop&q=75&w=900" width="900" height="675" alt="Graduating students celebrating with caps in the air" loading="lazy"></div>
+            <div class="news-card__body">
+              <span class="date-badge date-badge--blue"><time datetime="2026-12-05">5 Dec 2026</time><span class="date-badge__tag">Sample</span></span>
+              <h3 class="news-card__title">Graduation Ceremonies</h3>
+              <p>Celebrate the dedication, achievements, and exciting next steps of our graduating students.</p>
+              <a class="card-link" href="#news-graduation">Read More →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <!-- SECTION 9: NEWS AND UPCOMING EVENTS - END -->
+
+
+    <!-- SECTION 10: TESTIMONIALS - START -->
+    <section class="testimonials section" id="testimonials" aria-labelledby="testimonials-title">
+      <div class="container">
+        <header class="section-heading reveal">
+          <h2 class="section-heading__title" id="testimonials-title">What Parents and Students Say</h2>
+          <p class="section-heading__subtitle">Hear from the families and students who have experienced our learning community.</p>
+        </header>
+
+        <div class="testimonials__grid">
+
+          <figure class="testimonial-card testimonial-card--blue reveal">
+            <svg class="testimonial-card__quote" aria-hidden="true"><use href="#icon-quote"/></svg>
+            <img class="testimonial-card__photo" src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&q=75&w=200" width="72" height="72" alt="Portrait of a parent (sample)" loading="lazy">
+            <div class="stars" role="img" aria-label="Rated 5 out of 5 stars">
+              <svg><use href="#icon-star"/></svg><svg><use href="#icon-star"/></svg><svg><use href="#icon-star"/></svg><svg><use href="#icon-star"/></svg><svg><use href="#icon-star"/></svg>
+            </div>
+            <blockquote class="testimonial-card__text">
+              <p>“The teachers are supportive, and the school provides a welcoming environment where children are encouraged to learn, grow, and build confidence.”</p>
+            </blockquote>
+            <figcaption class="testimonial-card__author"><strong>A Parent</strong><span>Parent of a Student</span></figcaption>
+          </figure>
+
+          <figure class="testimonial-card testimonial-card--green reveal delay-2">
+            <svg class="testimonial-card__quote" aria-hidden="true"><use href="#icon-quote"/></svg>
+            <img class="testimonial-card__photo" src="https://images.unsplash.com/photo-1729691031378-d63d7e81bb38?auto=format&fit=crop&q=75&w=200" width="72" height="72" alt="Portrait of a student (sample)" loading="lazy">
+            <div class="stars" role="img" aria-label="Rated 5 out of 5 stars">
+              <svg><use href="#icon-star"/></svg><svg><use href="#icon-star"/></svg><svg><use href="#icon-star"/></svg><svg><use href="#icon-star"/></svg><svg><use href="#icon-star"/></svg>
+            </div>
+            <blockquote class="testimonial-card__text">
+              <p>“I enjoy the engaging lessons, the support from my teachers, and the opportunity to participate in activities beyond the classroom.”</p>
+            </blockquote>
+            <figcaption class="testimonial-card__author"><strong>A Student</strong><span>Current Student</span></figcaption>
+          </figure>
+
+          <figure class="testimonial-card testimonial-card--blue reveal delay-3">
+            <svg class="testimonial-card__quote" aria-hidden="true"><use href="#icon-quote"/></svg>
+            <img class="testimonial-card__photo" src="https://images.unsplash.com/photo-1758336011136-343678e4fc05?auto=format&fit=crop&q=75&w=200" width="72" height="72" alt="Portrait of an alumnus (sample)" loading="lazy">
+            <div class="stars" role="img" aria-label="Rated 5 out of 5 stars">
+              <svg><use href="#icon-star"/></svg><svg><use href="#icon-star"/></svg><svg><use href="#icon-star"/></svg><svg><use href="#icon-star"/></svg><svg><use href="#icon-star"/></svg>
+            </div>
+            <blockquote class="testimonial-card__text">
+              <p>“My time at the school helped me develop the confidence, knowledge, and discipline I needed to pursue my future goals.”</p>
+            </blockquote>
+            <figcaption class="testimonial-card__author"><strong>An Alumnus</strong><span>Former Student</span></figcaption>
+          </figure>
+        </div>
+
+        <!-- Sample content: swap for approved, genuine testimonials and photos -->
+        <p class="testimonials__note">Sample testimonials – replace with genuine feedback and approved photographs.</p>
+      </div>
+    </section>
+    <!-- SECTION 10: TESTIMONIALS - END -->
+
+
+    <!-- SECTION 11: ADMISSION CTA - START -->
+    <section class="admission-cta" id="admissions" aria-labelledby="cta-title">
+      <img class="admission-cta__bg" src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&q=75&w=1920" width="1920" height="900" alt="" loading="lazy">
+      <div class="admission-cta__overlay" aria-hidden="true"></div>
+
+      <div class="admission-cta__inner container reveal">
+        <h2 class="admission-cta__title" id="cta-title">Enrol Your Child Today</h2>
+        <p class="admission-cta__text">Give your child the gift of quality education in a nurturing environment.</p>
+        <!-- Placeholder destination: point this to your real application form when it exists -->
+        <a class="btn btn--green" href="#apply">Apply for Admission
+          <svg class="btn__icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <p class="admission-cta__note">Limited spaces available — contact our admissions team for current availability.</p>
+      </div>
+    </section>
+    <!-- SECTION 11: ADMISSION CTA - END -->
+
+
+
+    <!-- SECTION 12: CONTACT US - START -->
+    <section class="contact section" id="contact" aria-labelledby="contact-title">
+      <div class="container contact__inner">
+
+        <!-- Left column: contact details + social links -->
+        <div class="contact__info reveal">
+          <h2 class="contact__title" id="contact-title">Get in Touch</h2>
+          <p class="contact__subtitle">We're here to help. Reach out to our team for enquiries about admissions, academic programs, school activities, or any other questions.</p>
+
+          <!-- SAMPLE DETAILS: replace the address, phone and email here AND in the footer (Section 13) so they stay identical -->
+          <ul class="contact-list">
+            <li class="contact-item">
+              <span class="icon-chip contact-item__icon" aria-hidden="true"><svg><use href="#icon-pin"/></svg></span>
+              <div>
+                <p class="contact-item__label">Our Address</p>
+                <p class="contact-item__value">123 Learning Avenue, Benin City, Edo State, Nigeria</p>
+              </div>
+            </li>
+            <li class="contact-item">
+              <span class="icon-chip contact-item__icon contact-item__icon--green" aria-hidden="true"><svg><use href="#icon-phone"/></svg></span>
+              <div>
+                <p class="contact-item__label">Call Us</p>
+                <p class="contact-item__value"><a class="contact-link" href="tel:+234XXXXXXXXXX">+234 XXX XXX XXXX</a></p>
+              </div>
+            </li>
+            <li class="contact-item">
+              <span class="icon-chip contact-item__icon" aria-hidden="true"><svg><use href="#icon-mail"/></svg></span>
+              <div>
+                <p class="contact-item__label">Email Us</p>
+                <p class="contact-item__value"><a class="contact-link" href="mailto:info@schoolname.com">info@schoolname.com</a></p>
+              </div>
+            </li>
+            <li class="contact-item">
+              <span class="icon-chip contact-item__icon contact-item__icon--green" aria-hidden="true"><svg><use href="#icon-clock"/></svg></span>
+              <div>
+                <p class="contact-item__label">Opening Hours</p>
+                <p class="contact-item__value">Monday – Friday: 8:00 AM – 4:00 PM</p>
+              </div>
+            </li>
+          </ul>
+
+          <h3 class="contact__social-title">Connect With Us</h3>
+          <!-- Placeholder profile links (example.com): replace each href with the school's real profile -->
+          <ul class="social-links">
+            <li><a class="social-link" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Crestview Academy on Facebook (opens in a new tab)"><svg><use href="#icon-facebook"/></svg></a></li>
+            <li><a class="social-link" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Crestview Academy on Instagram (opens in a new tab)"><svg><use href="#icon-instagram"/></svg></a></li>
+            <li><a class="social-link" href="https://x.com/" target="_blank" rel="noopener noreferrer" aria-label="Crestview Academy on X (Twitter) (opens in a new tab)"><svg><use href="#icon-x"/></svg></a></li>
+            <li><a class="social-link" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="Crestview Academy on YouTube (opens in a new tab)"><svg><use href="#icon-youtube"/></svg></a></li>
+          </ul>
+        </div>
+
+        <!-- Right column: contact form card -->
+        <div class="contact-card reveal delay-2">
+          <h3 class="contact-card__title">Send Us a Message</h3>
+          <p class="contact-card__text">Have a question? Complete the form below and let us know how we can assist you.</p>
+
+          <!-- novalidate: our JavaScript shows friendlier messages than the browser's default bubbles.
+               To connect a real service, set CONTACT_FORM_ENDPOINT in the <script> block at the bottom of this file. -->
+          <form class="form" id="contact-form" novalidate>
+            <div class="form-field">
+              <label class="form-field__label" for="contact-name">Full Name <span class="form-field__required" aria-hidden="true">*</span></label>
+              <input class="form-field__control" type="text" id="contact-name" name="name" placeholder="Enter your full name" autocomplete="name" required aria-describedby="contact-name-error">
+              <p class="form-field__error" id="contact-name-error"></p>
+            </div>
+
+            <div class="form-field">
+              <label class="form-field__label" for="contact-email">Email Address <span class="form-field__required" aria-hidden="true">*</span></label>
+              <input class="form-field__control" type="email" id="contact-email" name="email" placeholder="Enter your email address" autocomplete="email" required aria-describedby="contact-email-error">
+              <p class="form-field__error" id="contact-email-error"></p>
+            </div>
+
+            <div class="form-field">
+              <label class="form-field__label" for="contact-phone">Phone Number <span class="form-field__optional">(optional)</span></label>
+              <input class="form-field__control" type="tel" id="contact-phone" name="phone" placeholder="Enter your phone number" autocomplete="tel" aria-describedby="contact-phone-error">
+              <p class="form-field__error" id="contact-phone-error"></p>
+            </div>
+
+            <div class="form-field">
+              <label class="form-field__label" for="contact-subject">Subject <span class="form-field__required" aria-hidden="true">*</span></label>
+              <select class="form-field__control form-field__control--select" id="contact-subject" name="subject" required aria-describedby="contact-subject-error">
+                <option value="" selected disabled>What is your enquiry about?</option>
+                <option>General Enquiry</option>
+                <option>Admissions</option>
+                <option>Academic Programs</option>
+                <option>School Fees</option>
+                <option>School Facilities</option>
+                <option>Other</option>
+              </select>
+              <p class="form-field__error" id="contact-subject-error"></p>
+            </div>
+
+            <div class="form-field">
+              <label class="form-field__label" for="contact-message">Message <span class="form-field__required" aria-hidden="true">*</span></label>
+              <textarea class="form-field__control" id="contact-message" name="message" rows="5" placeholder="Write your message here..." required aria-describedby="contact-message-error"></textarea>
+              <p class="form-field__error" id="contact-message-error"></p>
+            </div>
+
+            <button class="btn btn--blue form__submit" type="submit" id="contact-submit">
+              <span class="form__submit-label">Send Message →</span>
+            </button>
+
+            <!-- Result message (announced to screen readers) -->
+            <p class="form-status" id="contact-status" role="status" aria-live="polite" hidden></p>
+          </form>
+        </div>
+      </div>
+      <!-- Optional map: add a Google Maps <iframe> here ONLY once the school's real address is known. Left out on purpose so no fake location is shown. -->
+    </section>
+    <!-- SECTION 12: CONTACT US - END -->
+
+
+  </main>
+
+  <!-- SECTION 13: FOOTER - START -->
+  <footer class="footer" id="footer">
+    <div class="footer__inner container">
+
+      <!-- Column 1: school information -->
+      <div class="footer__col footer__col--about">
+        <a class="logo logo--light" href="#home" aria-label="Crestview Academy – back to top">
+          <svg class="logo__mark" viewBox="0 0 48 56" role="img" aria-hidden="true" focusable="false">
+            <path d="M24 2 4 9v17c0 14 8.6 24.2 20 28 11.4-3.8 20-14 20-28V9L24 2Z" fill="#1d5fd8"/>
+            <path d="M24 2 4 9v17c0 14 8.6 24.2 20 28V2Z" fill="#164bb0"/>
+            <path d="M11 24.5c4.2-1.6 8.6-1.4 13 1.2 4.4-2.6 8.8-2.8 13-1.2V38c-4.2-1.5-8.6-1.2-13 1.4-4.4-2.6-8.8-2.9-13-1.4V24.5Z" fill="#fff"/>
+            <path d="M24 25.7v13.7" stroke="#1d5fd8" stroke-width="1.6"/>
+            <path d="m24 9.5 2.1 4.3 4.7.7-3.4 3.3.8 4.7-4.2-2.2-4.2 2.2.8-4.7-3.4-3.3 4.7-.7L24 9.5Z" fill="#ffc928"/>
+          </svg>
+          <span class="logo__text">
+            <span class="logo__name">Crestview</span>
+            <span class="logo__tagline">Academy</span>
+          </span>
+        </a>
+        <p class="footer__description">Committed to nurturing curious minds, building strong character, and preparing students for a brighter future through quality education.</p>
+
+        <!-- Same links as the Contact section: update both together -->
+        <ul class="social-links social-links--dark">
+          <li><a class="social-link" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Crestview Academy on Facebook (opens in a new tab)"><svg><use href="#icon-facebook"/></svg></a></li>
+          <li><a class="social-link" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Crestview Academy on Instagram (opens in a new tab)"><svg><use href="#icon-instagram"/></svg></a></li>
+          <li><a class="social-link" href="https://x.com/" target="_blank" rel="noopener noreferrer" aria-label="Crestview Academy on X (Twitter) (opens in a new tab)"><svg><use href="#icon-x"/></svg></a></li>
+          <li><a class="social-link" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="Crestview Academy on YouTube (opens in a new tab)"><svg><use href="#icon-youtube"/></svg></a></li>
+        </ul>
+      </div>
+
+      <!-- Column 2: quick links (each href matches a real section id on this page) -->
+      <nav class="footer__col" aria-labelledby="footer-links-title">
+        <h2 class="footer__heading" id="footer-links-title">Quick Links</h2>
+        <ul class="footer-links">
+          <li><a href="#home"><svg aria-hidden="true"><use href="#icon-arrow-right"/></svg>Home</a></li>
+          <li><a href="#about"><svg aria-hidden="true"><use href="#icon-arrow-right"/></svg>About Us</a></li>
+          <li><a href="#courses"><svg aria-hidden="true"><use href="#icon-arrow-right"/></svg>Academic Programs</a></li>
+          <li><a href="#admissions"><svg aria-hidden="true"><use href="#icon-arrow-right"/></svg>Admissions</a></li>
+          <li><a href="#news"><svg aria-hidden="true"><use href="#icon-arrow-right"/></svg>News and Events</a></li>
+          <li><a href="#contact"><svg aria-hidden="true"><use href="#icon-arrow-right"/></svg>Contact Us</a></li>
+        </ul>
+      </nav>
+
+      <!-- Column 3: contact details (SAMPLE – keep identical to Section 12) -->
+      <div class="footer__col">
+        <h2 class="footer__heading">Contact Details</h2>
+        <ul class="footer-contact">
+          <li><svg aria-hidden="true"><use href="#icon-pin"/></svg><span>123 Learning Avenue, Benin City, Edo State, Nigeria</span></li>
+          <li><svg aria-hidden="true"><use href="#icon-phone"/></svg><a href="tel:+234XXXXXXXXXX">+234 XXX XXX XXXX</a></li>
+          <li><svg aria-hidden="true"><use href="#icon-mail"/></svg><a href="mailto:info@schoolname.com">info@schoolname.com</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: newsletter. To connect a real service, set NEWSLETTER_ENDPOINT in the <script> block at the bottom of this file. -->
+      <div class="footer__col">
+        <h2 class="footer__heading" id="newsletter-title">Newsletter</h2>
+        <p class="footer__description">Stay informed about school news, upcoming events, academic updates, and important announcements. Subscribe to our newsletter.</p>
+
+        <form class="newsletter" id="newsletter-form" novalidate aria-labelledby="newsletter-title">
+          <div class="newsletter__row">
+            <label class="visually-hidden" for="newsletter-email">Email address</label>
+            <input class="newsletter__input" type="email" id="newsletter-email" name="email" placeholder="Enter your email address" autocomplete="email" required aria-describedby="newsletter-error">
+            <button class="newsletter__button" type="submit" id="newsletter-submit">Subscribe</button>
+          </div>
+          <p class="newsletter__error" id="newsletter-error"></p>
+          <p class="form-status form-status--dark" id="newsletter-status" role="status" aria-live="polite" hidden></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer__bottom">
+      <div class="footer__bottom-inner container">
+        <p class="footer__copyright">© <span id="footer-year">2026</span> Crestview Academy. All Rights Reserved.</p>
+        <ul class="footer__legal">
+          <!-- Placeholder destinations: point these at the real policy pages when they exist -->
+          <li><a href="#privacy-policy">Privacy Policy</a></li>
+          <li><a href="#terms-of-service">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  <!-- SECTION 13: FOOTER - END -->
+
+
+
+
+  <!-- HERO VIDEO MODAL (opened by the "Watch Video" button) -->
+  <dialog class="video-modal" id="video-modal" aria-labelledby="video-modal-title">
+    <div class="video-modal__header">
+      <h2 class="video-modal__title" id="video-modal-title">Welcome to Crestview Academy</h2>
+      <button class="video-modal__close" id="video-close" type="button" aria-label="Close video">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg>
+      </button>
+    </div>
+    <!-- JavaScript puts the real video here once VIDEO_EMBED_URL is set (see the script block at the bottom). Until then this placeholder shows. -->
+    <div class="video-modal__stage" id="video-stage">
+      <div class="video-modal__placeholder">
+        <svg viewBox="0 0 24 24" width="56" height="56" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10 8.2v7.6l6.2-3.8L10 8.2Z" fill="currentColor"/></svg>
+        <p><strong>Video placeholder</strong></p>
+        <p>Add your school introduction video link to <code>VIDEO_EMBED_URL</code> in the <code>&lt;script&gt;</code> block at the bottom of this file.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Small message bar used for links to pages that do not exist yet -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ==========================================================================
+   CRESTVIEW ACADEMY – HOMEPAGE SCRIPT
+   Blocks (search for these headings):
+     1. SETTINGS YOU MAY WANT TO EDIT
+     2. NAVBAR AND MOBILE NAVIGATION
+     3. MEGA MENU INTERACTIONS
+     4. HERO VIDEO MODAL
+     5. CAROUSEL NAVIGATION
+     6. CAROUSEL AUTOPLAY
+     7. ACCESSIBILITY AND INTERACTION HELPERS (includes the scroll-reveal animation for Sections 5–11)
+   Also below: SECTION 12: CONTACT FORM FUNCTIONALITY and SECTION 13: NEWSLETTER SUBSCRIPTION.
+   Everything starts from one place: the init() call at the bottom.
+   ========================================================================== */
+'use strict';
+
+// Tells the CSS that JavaScript is running, so scroll-reveal elements may start hidden
+document.documentElement.classList.add('js');
+
+
+/* ==========================================================================
+   1. SETTINGS YOU MAY WANT TO EDIT
+   ========================================================================== */
+
+// Paste your school video's EMBED link here (for example a YouTube link that looks like
+// "https://www.youtube.com/embed/VIDEO_ID"). Leave it empty to show the placeholder.
+const VIDEO_EMBED_URL = 'https://www.youtube-nocookie.com/embed/MlNNGeusB7M?rel=0';
+
+// How long each carousel slide stays on screen (milliseconds).
+const CAROUSEL_AUTOPLAY_DELAY = 5000;
+
+// How long the carousel slide animation takes. Keep in sync with the CSS (0.65s).
+const CAROUSEL_TRANSITION_MS = 650;
+
+// WHERE THE FORMS SEND THEIR DATA ---------------------------------------------------
+// This page has no backend, so nothing can be delivered until you connect a service.
+// Paste the web address your service gives you (for example a Formspree, Getform or
+// your own server URL) between the quotes. While these are empty, the forms still
+// check the input, but they will honestly say that nothing was sent.
+const CONTACT_FORM_ENDPOINT = '';      // e.g. 'https://formspree.io/f/your-form-id'
+const NEWSLETTER_ENDPOINT = '';        // e.g. 'https://formspree.io/f/your-newsletter-id'
+
+
+/* ==========================================================================
+   Tiny helpers (shorter versions of document.querySelector)
+   ========================================================================== */
+const $ = (selector, scope = document) => scope.querySelector(selector);
+const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
+
+// True when the visitor asked their device for less motion
+const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Elements that can receive keyboard focus (used by the focus traps below)
+const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"]), input, select, textarea';
+
+// Shared by the mega menu and the video modal: lock/unlock page scrolling
+function lockPageScroll(shouldLock) {
+  document.documentElement.classList.toggle('is-locked', shouldLock);
+}
+
+
+/* ==========================================================================
+   2. NAVBAR AND MOBILE NAVIGATION
+   ========================================================================== */
+
+// Adds a soft shadow under the navbar once the page has been scrolled
+function initNavbarScrollShadow() {
+  const navbar = $('.navbar');
+  if (!navbar) return;
+
+  const update = () => navbar.classList.toggle('is-scrolled', window.scrollY > 8);
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+}
+
+
+/* ==========================================================================
+   3. MEGA MENU INTERACTIONS
+   ========================================================================== */
+function initMegaMenu() {
+  const toggleButton = $('#menu-toggle');
+  const menuLayer = $('#mega');
+  const panel = $('#mega-menu');
+  const overlay = $('#mega-overlay');
+  const closeButton = $('#mega-close');
+  const tabs = $$('.mega-tab');
+  const tabPanels = $$('.mega-panel');
+  if (!toggleButton || !menuLayer || !panel) return;
+
+  let isOpen = false;
+
+  // --- Open / close -------------------------------------------------------
+  function openMenu() {
+    if (isOpen) return;
+    isOpen = true;
+    menuLayer.classList.add('is-open');
+    panel.removeAttribute('inert');           // makes the panel focusable again
+    panel.setAttribute('aria-hidden', 'false');
+    toggleButton.setAttribute('aria-expanded', 'true');
+    toggleButton.setAttribute('aria-label', 'Close menu');
+    lockPageScroll(true);
+    closeButton.focus({ preventScroll: true }); // keyboard users land inside the panel
+  }
+
+  function closeMenu({ returnFocus = true } = {}) {
+    if (!isOpen) return;
+    isOpen = false;
+    menuLayer.classList.remove('is-open');
+    panel.setAttribute('inert', '');          // hides it from Tab and screen readers while parked off-screen
+    panel.setAttribute('aria-hidden', 'true');
+    toggleButton.setAttribute('aria-expanded', 'false');
+    toggleButton.setAttribute('aria-label', 'Open menu');
+    lockPageScroll(false);
+    if (returnFocus) toggleButton.focus({ preventScroll: true });
+  }
+
+  toggleButton.addEventListener('click', () => (isOpen ? closeMenu() : openMenu()));
+  closeButton.addEventListener('click', () => closeMenu());
+  overlay.addEventListener('click', () => closeMenu());
+
+  // Clicking any link inside the panel closes it (the page then jumps to that link's target)
+  $$('a', panel).forEach((link) => link.addEventListener('click', () => closeMenu({ returnFocus: false })));
+
+  // Closing with the Escape key + keeping Tab focus inside the open panel
+  document.addEventListener('keydown', (event) => {
+    if (!isOpen) return;
+
+    if (event.key === 'Escape') {
+      closeMenu();
+      return;
+    }
+    if (event.key === 'Tab') trapFocus(event, panel);
+  });
+
+  // If the window grows past the mobile layout, nothing needs resetting – but make sure scroll is never left locked
+  window.addEventListener('resize', () => { if (!isOpen) lockPageScroll(false); });
+
+  // --- Category tabs ------------------------------------------------------
+  function selectTab(tab, { moveFocus = false } = {}) {
+    tabs.forEach((item) => {
+      const isSelected = item === tab;
+      item.classList.toggle('is-active', isSelected);
+      item.setAttribute('aria-selected', String(isSelected));
+      item.tabIndex = isSelected ? 0 : -1;   // only the selected tab is in the Tab order (arrow keys move between them)
+    });
+
+    // Show the matching panel (the CSS animation replays because the panel is re-displayed)
+    tabPanels.forEach((tabPanel) => {
+      tabPanel.hidden = tabPanel.id !== tab.getAttribute('aria-controls');
+    });
+
+    if (moveFocus) tab.focus();
+    // Keep the chosen pill visible in the horizontally scrolling strip on small screens
+    tab.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  }
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => selectTab(tab));
+
+    // Arrow-key navigation, the standard pattern for tab lists
+    tab.addEventListener('keydown', (event) => {
+      const keys = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 };
+      let nextIndex = null;
+
+      if (event.key in keys) nextIndex = (index + keys[event.key] + tabs.length) % tabs.length;
+      if (event.key === 'Home') nextIndex = 0;
+      if (event.key === 'End') nextIndex = tabs.length - 1;
+
+      if (nextIndex !== null) {
+        event.preventDefault();
+        selectTab(tabs[nextIndex], { moveFocus: true });
+      }
+    });
+  });
+}
+
+// Keeps keyboard focus cycling inside `container` (used while a dialog-like layer is open)
+function trapFocus(event, container) {
+  const focusable = $$(FOCUSABLE, container).filter((el) => el.offsetParent !== null);
+  if (!focusable.length) return;
+
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
+
+
+/* ==========================================================================
+   4. HERO VIDEO MODAL
+   Uses the browser's built-in <dialog>: it already handles the Escape key,
+   focus trapping and the dimmed backdrop for us.
+   ========================================================================== */
+function initVideoModal() {
+  const openButton = $('#video-open');
+  const modal = $('#video-modal');
+  const closeButton = $('#video-close');
+  const stage = $('#video-stage');
+  if (!openButton || !modal || !stage) return;
+
+  const placeholderMarkup = stage.innerHTML;   // remember the placeholder so we can restore it
+
+  function openModal() {
+    // Only add a real video when a link has been provided
+    if (VIDEO_EMBED_URL) {
+      const frame = document.createElement('iframe');
+      frame.src = VIDEO_EMBED_URL + (VIDEO_EMBED_URL.includes('?') ? '&' : '?') + 'autoplay=1';
+      frame.title = 'Crestview Academy introduction video';
+      frame.allow = 'autoplay; encrypted-media; picture-in-picture';
+      frame.allowFullscreen = true;
+      frame.referrerPolicy = 'strict-origin-when-cross-origin';  // YouTube needs this to play embedded videos
+      stage.replaceChildren(frame);
+    }
+    modal.showModal();
+    lockPageScroll(true);
+  }
+
+  function closeModal() {
+    modal.close();
+  }
+
+  // Runs for every way of closing (button, Escape key, backdrop click)
+  modal.addEventListener('close', () => {
+    stage.innerHTML = placeholderMarkup;   // removing the iframe also stops the video playing
+    lockPageScroll(false);
+    openButton.focus({ preventScroll: true });
+  });
+
+  openButton.addEventListener('click', openModal);
+  closeButton.addEventListener('click', closeModal);
+
+  // A click on the dimmed backdrop lands on the <dialog> element itself, so close then
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) closeModal();
+  });
+}
+
+
+/* ==========================================================================
+   5. CAROUSEL NAVIGATION
+   How it works:
+   - The slides sit in a row. We add a copy of the LAST slide before the first one
+     and a copy of the FIRST slide after the last one.
+   - Going "next" from the last slide slides onto the copy of the first slide,
+     then (after the animation) we silently jump to the real first slide.
+     Nobody sees the jump, so the loop looks endless.
+   - `position` counts the copies too (1 = first real slide), while
+     `currentIndex` is the human-friendly 0-4 index used by the dots.
+   ========================================================================== */
+function initCarousel() {
+  const root = $('[data-carousel]');
+  if (!root) return;
+
+  const track = $('.carousel__track', root);
+  const dots = $$('.carousel__dot', root);
+  const prevButton = $('#carousel-prev', root);
+  const nextButton = $('#carousel-next', root);
+  const viewport = $('.carousel__viewport', root);
+  const realSlides = Array.from(track.children);
+  const slideCount = realSlides.length;
+
+  // Build the two loop copies and hide them from assistive technology
+  const firstClone = realSlides[0].cloneNode(true);
+  const lastClone = realSlides[slideCount - 1].cloneNode(true);
+  [firstClone, lastClone].forEach((clone) => {
+    clone.setAttribute('aria-hidden', 'true');
+    clone.querySelector('img').loading = 'eager';
+  });
+  track.append(firstClone);
+  track.prepend(lastClone);
+
+  let position = 1;          // index including the clones
+  let isAnimating = false;   // blocks clicks while a slide is mid-animation
+  let finishTimer = null;
+
+  const currentIndex = () => (position - 1 + slideCount) % slideCount;
+
+  function render({ animate }) {
+    track.classList.toggle('is-instant', !animate);
+    root.style.setProperty('--slide-index', position);
+    updateDots();
+  }
+
+  function updateDots() {
+    dots.forEach((dot, i) => {
+      const active = i === currentIndex();
+      dot.classList.toggle('is-active', active);
+      if (active) dot.setAttribute('aria-current', 'true');
+      else dot.removeAttribute('aria-current');
+    });
+  }
+
+  // Called when a slide animation ends: if we are standing on a copy, jump to the real slide
+  function finishMove() {
+    clearTimeout(finishTimer);
+    if (position === slideCount + 1) position = 1;
+    if (position === 0) position = slideCount;
+    render({ animate: false });
+    void track.offsetWidth;            // forces the browser to apply the instant jump before animations return
+    track.classList.remove('is-instant');
+    isAnimating = false;
+  }
+
+  function moveTo(newPosition) {
+    if (isAnimating) return;
+    isAnimating = true;
+    position = newPosition;
+    render({ animate: true });
+
+    // Fallback timer: also covers reduced-motion where no transition event fires
+    clearTimeout(finishTimer);
+    finishTimer = setTimeout(finishMove, prefersReducedMotion() ? 20 : CAROUSEL_TRANSITION_MS + 60);
+  }
+
+  const goNext = () => moveTo(position + 1);
+  const goPrev = () => moveTo(position - 1);
+  const goToIndex = (index) => {
+    if (index === currentIndex()) return;
+    moveTo(index + 1);
+  };
+
+  // Buttons and dots (a manual click restarts the autoplay timer)
+  nextButton.addEventListener('click', () => { goNext(); autoplay.restart(); });
+  prevButton.addEventListener('click', () => { goPrev(); autoplay.restart(); });
+  dots.forEach((dot, i) => dot.addEventListener('click', () => { goToIndex(i); autoplay.restart(); }));
+
+  // Keyboard: left/right arrows while focus is anywhere in the carousel
+  root.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowRight') { goNext(); autoplay.restart(); }
+    if (event.key === 'ArrowLeft') { goPrev(); autoplay.restart(); }
+  });
+
+  // Touch / mouse swipe
+  let swipeStartX = null;
+  viewport.addEventListener('pointerdown', (event) => { swipeStartX = event.clientX; });
+  viewport.addEventListener('pointerup', (event) => {
+    if (swipeStartX === null) return;
+    const distance = event.clientX - swipeStartX;
+    swipeStartX = null;
+    if (Math.abs(distance) < 50) return;     // too small = just a tap
+    if (distance < 0) goNext(); else goPrev();
+    autoplay.restart();
+  });
+  viewport.addEventListener('pointercancel', () => { swipeStartX = null; });
+
+  // Start in the right place without animating, then hook up autoplay
+  render({ animate: false });
+  void track.offsetWidth;
+  track.classList.remove('is-instant');
+
+  const autoplay = createCarouselAutoplay(root, goNext);
+  autoplay.start();
+}
+
+
+/* ==========================================================================
+   6. CAROUSEL AUTOPLAY
+   Plays automatically, but politely:
+   - pauses while the mouse is over the carousel (only on devices that hover)
+   - pauses while keyboard focus is inside it
+   - pauses when the browser tab is hidden
+   - the pause/play button lets people stop it for good
+   - never starts for people who prefer reduced motion
+   ========================================================================== */
+function createCarouselAutoplay(root, onTick) {
+  const toggleButton = $('#carousel-toggle', root);
+  const track = $('.carousel__track', root);
+  const canHover = window.matchMedia('(hover: hover)').matches;
+
+  let timerId = null;
+  let userPaused = prefersReducedMotion();   // reduced motion = start paused
+  let hoverPaused = false;
+  let focusPaused = false;
+  let hiddenPaused = false;
+
+  const shouldRun = () => !userPaused && !hoverPaused && !focusPaused && !hiddenPaused;
+
+  function clear() {
+    clearInterval(timerId);
+    timerId = null;
+  }
+
+  function sync() {
+    clear();
+    if (shouldRun()) timerId = setInterval(onTick, CAROUSEL_AUTOPLAY_DELAY);
+    // While sliding by itself the slides are not announced; when paused they are
+    track.setAttribute('aria-live', shouldRun() ? 'off' : 'polite');
+  }
+
+  function updateToggleButton() {
+    toggleButton.classList.toggle('is-paused', userPaused);
+    toggleButton.setAttribute('aria-label', userPaused ? 'Start automatic slide show' : 'Pause automatic slide show');
+  }
+
+  if (canHover) {
+    root.addEventListener('mouseenter', () => { hoverPaused = true; sync(); });
+    root.addEventListener('mouseleave', () => { hoverPaused = false; sync(); });
+  }
+  root.addEventListener('focusin', () => { focusPaused = true; sync(); });
+  root.addEventListener('focusout', (event) => {
+    if (!root.contains(event.relatedTarget)) { focusPaused = false; sync(); }
+  });
+  document.addEventListener('visibilitychange', () => { hiddenPaused = document.hidden; sync(); });
+
+  toggleButton.addEventListener('click', () => {
+    userPaused = !userPaused;
+    updateToggleButton();
+    sync();
+  });
+
+  updateToggleButton();
+
+  return {
+    start: sync,
+    restart: sync,   // sync() clears the old interval and starts a fresh countdown
+  };
+}
+
+
+/* ==========================================================================
+   7. ACCESSIBILITY AND INTERACTION HELPERS
+   ========================================================================== */
+
+// Small message bar at the bottom of the screen
+let toastTimer = null;
+function showToast(message) {
+  const toast = $('#toast');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.classList.add('is-visible');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 3200);
+}
+
+// Links that point to pages/sections which are not built yet (for example #about)
+// would do nothing when clicked. Instead we tell the visitor, so nothing feels broken.
+// Once you add a section with a matching id, the link scrolls to it automatically.
+function initInternalLinks() {
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest('a[href^="#"]');
+    if (!link) return;
+
+    const hash = link.getAttribute('href');
+    if (hash === '#') { event.preventDefault(); return; }
+
+    if (!document.getElementById(hash.slice(1))) {
+      event.preventDefault();
+      showToast(`“${link.textContent.trim()}” will open in the next stage of the build.`);
+    }
+  });
+}
+
+// Marks the matching main-menu item as active when a section with that id is on screen.
+// Only "Home" exists for now, so it stays active; this is ready for the next sections.
+function initActiveNavHighlight() {
+  const links = $$('.main-nav__link[href]');
+  const sections = links
+    .map((link) => document.getElementById(link.getAttribute('href').slice(1)))
+    .filter(Boolean);
+  if (sections.length < 2 || !('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      links.forEach((link) => {
+        const isCurrent = link.getAttribute('href') === `#${entry.target.id}`;
+        link.classList.toggle('is-active', isCurrent);
+        if (isCurrent) link.setAttribute('aria-current', 'page');
+        else link.removeAttribute('aria-current');
+      });
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+
+  sections.forEach((section) => observer.observe(section));
+}
+
+
+// Fades sections in as they scroll into view (Sections 5–11).
+// Elements with the class "reveal" start hidden (see the CSS); we add "is-visible" once on screen.
+function initScrollReveal() {
+  const items = $$('.reveal');
+  if (!items.length) return;
+
+  // Older browsers or reduced motion: just show everything straight away
+  if (!('IntersectionObserver' in window) || prefersReducedMotion()) {
+    items.forEach((item) => item.classList.add('is-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);   // animate only once
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  items.forEach((item) => observer.observe(item));
+}
+
+// ==========================================================================
+// SECTION 12: CONTACT FORM FUNCTIONALITY
+// ==========================================================================
+
+// Shared validation rules. Each returns an error message, or '' when the value is fine.
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+const validators = {
+  name: (value) => {
+    if (!value) return 'Please enter your full name.';
+    if (value.length < 2) return 'Your name looks too short.';
+    return '';
+  },
+  email: (value) => {
+    if (!value) return 'Please enter your email address.';
+    if (!EMAIL_PATTERN.test(value)) return 'Please enter a valid email address, like name@example.com.';
+    return '';
+  },
+  phone: (value) => {
+    if (!value) return '';   // optional field
+    if (!/^\+?[\d\s()\-]{7,20}$/.test(value)) return 'Please enter a valid phone number, or leave it empty.';
+    return '';
+  },
+  subject: (value) => (value ? '' : 'Please choose what your enquiry is about.'),
+  message: (value) => {
+    if (!value) return 'Please write your message.';
+    if (value.length < 10) return 'Please write a little more (at least 10 characters).';
+    return '';
+  },
+};
+
+// Shows or clears the error under one field and tells assistive technology about it
+function setFieldError(field, message) {
+  const error = document.getElementById(field.getAttribute('aria-describedby'));
+  field.setAttribute('aria-invalid', message ? 'true' : 'false');
+  if (error) error.textContent = message;
+}
+
+// Validates a single field; returns true when it is valid
+function validateField(field) {
+  const rule = validators[field.name];
+  const message = rule ? rule(field.value.trim()) : '';
+  setFieldError(field, message);
+  return !message;
+}
+
+// Shows a message box under a form. type = 'info' | 'success' | 'error'
+function showFormStatus(box, type, message) {
+  const dark = box.classList.contains('form-status--dark');
+  box.className = `form-status form-status--${type}${dark ? ' form-status--dark' : ''}`;
+  box.textContent = message;
+  box.hidden = false;
+}
+
+// Sends the form data to the configured address. Resolves true only when the server says OK.
+async function sendToEndpoint(url, form) {
+  const response = await fetch(url, {
+    method: 'POST',
+    body: new FormData(form),
+    headers: { Accept: 'application/json' },
+  });
+  return response.ok;
+}
+
+// Turns a button into a "busy" state while a request is running
+function setButtonBusy(button, isBusy) {
+  button.disabled = isBusy;
+  button.classList.toggle('is-loading', isBusy);
+  button.setAttribute('aria-busy', String(isBusy));
+}
+
+function initContactForm() {
+  const form = $('#contact-form');
+  if (!form) return;
+
+  const fields = $$('.form-field__control', form);
+  const submitButton = $('#contact-submit');
+  const statusBox = $('#contact-status');
+
+  // Check a field when the visitor leaves it; clear its error as soon as it becomes valid
+  fields.forEach((field) => {
+    field.addEventListener('blur', () => { if (field.value || field.getAttribute('aria-invalid') === 'true') validateField(field); });
+    const eventName = field.tagName === 'SELECT' ? 'change' : 'input';
+    field.addEventListener(eventName, () => { if (field.getAttribute('aria-invalid') === 'true') validateField(field); });
+  });
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();             // we handle sending ourselves
+    statusBox.hidden = true;
+
+    // Validate every field (map + filter so ALL errors show, not just the first)
+    const invalidFields = fields.filter((field) => !validateField(field));
+    if (invalidFields.length) {
+      invalidFields[0].focus();         // jump to the first problem
+      showFormStatus(statusBox, 'error', 'Please fix the highlighted fields and try again.');
+      return;
+    }
+
+    // No service connected: be honest, do not pretend the message was delivered
+    if (!CONTACT_FORM_ENDPOINT) {
+      showFormStatus(statusBox, 'info',
+        'Thanks – your details look good, but this website is not connected to a message service yet, so nothing was sent. Please email or call us using the details on this page.');
+      return;
+    }
+
+    setButtonBusy(submitButton, true);
+    try {
+      const accepted = await sendToEndpoint(CONTACT_FORM_ENDPOINT, form);
+      if (accepted) {
+        form.reset();
+        fields.forEach((field) => setFieldError(field, ''));
+        showFormStatus(statusBox, 'success', 'Thank you! Your message has been sent. Our team will get back to you soon.');
+      } else {
+        showFormStatus(statusBox, 'error', 'Sorry, we could not send your message. Please try again or contact us directly.');
+      }
+    } catch (error) {
+      showFormStatus(statusBox, 'error', 'We could not reach the server. Please check your connection and try again.');
+    } finally {
+      setButtonBusy(submitButton, false);
+    }
+  });
+}
+
+
+// ==========================================================================
+// SECTION 13: NEWSLETTER SUBSCRIPTION
+// ==========================================================================
+function initNewsletterForm() {
+  const form = $('#newsletter-form');
+  if (!form) return;
+
+  const input = $('#newsletter-email', form);
+  const errorBox = $('#newsletter-error', form);
+  const submitButton = $('#newsletter-submit', form);
+  const statusBox = $('#newsletter-status', form);
+
+  function validateNewsletterEmail() {
+    const value = input.value.trim();
+    let message = '';
+    if (!value) message = 'Please enter your email address.';
+    else if (!EMAIL_PATTERN.test(value)) message = 'Please enter a valid email address.';
+
+    input.setAttribute('aria-invalid', message ? 'true' : 'false');
+    errorBox.textContent = message;
+    return !message;
+  }
+
+  input.addEventListener('input', () => { if (input.getAttribute('aria-invalid') === 'true') validateNewsletterEmail(); });
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    statusBox.hidden = true;
+
+    if (!validateNewsletterEmail()) {
+      input.focus();
+      return;
+    }
+
+    // No service connected: say so honestly instead of claiming a subscription
+    if (!NEWSLETTER_ENDPOINT) {
+      showFormStatus(statusBox, 'info', 'Your email looks valid, but the newsletter is not connected to a subscription service yet, so you have not been subscribed.');
+      return;
+    }
+
+    setButtonBusy(submitButton, true);
+    try {
+      const accepted = await sendToEndpoint(NEWSLETTER_ENDPOINT, form);
+      if (accepted) {
+        form.reset();
+        showFormStatus(statusBox, 'success', 'Thank you for subscribing!');
+      } else {
+        showFormStatus(statusBox, 'error', 'Sorry, we could not subscribe you right now. Please try again later.');
+      }
+    } catch (error) {
+      showFormStatus(statusBox, 'error', 'We could not reach the server. Please try again.');
+    } finally {
+      setButtonBusy(submitButton, false);
+    }
+  });
+}
+
+// Writes the current year into the copyright line (the HTML holds a fallback year)
+function initFooterYear() {
+  const yearElement = $('#footer-year');
+  if (yearElement) yearElement.textContent = new Date().getFullYear();
+}
+
+
+/* ==========================================================================
+   START EVERYTHING
+   ========================================================================== */
+function init() {
+  initNavbarScrollShadow();
+  initMegaMenu();
+  initVideoModal();
+  initCarousel();
+  initInternalLinks();
+  initActiveNavHighlight();
+  initScrollReveal();
+  initContactForm();
+  initNewsletterForm();
+  initFooterYear();
+}
+
+// The script tag uses `defer`, so the HTML is ready; this guard is just extra safety
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+else init();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Library | Crestview Academy</title>
+  <meta name="description" content="The Crestview Academy library: collections, a searchable sample shelf, reading spaces, reading programmes, how to use the library and how to get in touch.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="library.css">
+  <link rel="stylesheet" href="site-header.css">
+  <script src="library.js" defer></script>
+  <script src="site-header.js" defer></script>
+</head>
+<body>
+
+  <!-- ======================================================
+       HOW TO EDIT THIS PAGE (quick map)
+       - School name: search for "Crestview Academy" and replace it everywhere.
+       - Photos: every <img> uses an Unsplash link. Swap the src for your own photo file.
+       - Sample books: edit the BOOKS list at the top of library.js. They are placeholders, not a real catalogue.
+       - Digital library: set DIGITAL_LIBRARY_URL in library.js only when a real one exists.
+       - Rules, borrowing policy, opening hours, contact details and FAQ answers are PLACEHOLDERS (look for [brackets]).
+       - Newsletter: set NEWSLETTER_ENDPOINT in library.js to connect it to a real service.
+       Anything marked "Sample", "Example" or "Placeholder" is not a verified fact.
+       ====================================================== -->
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- SVG ICON SPRITE: icons are used elsewhere with <use href="#icon-name"> -->
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="icon-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></symbol>
+    <symbol id="icon-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-9.2-9.4C1.6 7.1 3.7 4 7 4c2 0 3.5 1.1 5 3 1.5-1.9 3-3 5-3 3.3 0 5.4 3.1 4.2 6.6C19.5 15.4 12 20 12 20Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-quote" viewBox="0 0 24 24"><path d="M10 6H5.5A1.5 1.5 0 0 0 4 7.5V12a1.5 1.5 0 0 0 1.5 1.5H8c0 2-1 3.2-3 3.7l.5 1.8c3.2-.8 5-3 5-6.3V6Zm10 0h-4.5A1.5 1.5 0 0 0 14 7.5V12a1.5 1.5 0 0 0 1.5 1.5H18c0 2-1 3.2-3 3.7l.5 1.8c3.200-.8 5-3 5-6.300V6Z" fill="currentColor"/></symbol>
+    <symbol id="icon-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 10h17M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="icon-building" viewBox="0 0 24 24"><path d="M4 21V9l8-5 8 5v12M2 21h20M9 21v-6h6v6M8.500 11h.01M15.500 11h.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4.500 18.500A2 2 0 0 0 6.300 21.500h11.400a2 2 0 0 0 1.800-3L14 9V3M7.500 15h9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-award" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m8.500 14 -1.500 7 5-3 5 3-1.500-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-cap" viewBox="0 0 24 24"><path d="M12 4 2 9l10 5 10-5-10-5Zm-6 8v4.500c0 1.400 2.700 3 6 3s6-1.600 6-3V12M22 9v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.500" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.500 20c.5-3.600 3.200-5.500 6.500-5.500s6 1.900 6.500 5.500M16 4.800a3.500 3.500 0 0 1 0 6.400M18 14.800c2 .6 3.200 2.300 3.500 5.200" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="icon-teacher" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 20l4-5 4 5M12 15v-0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-trophy" viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 0 1-10 0V4Zm0 2H4c0 3 1 4.500 3 5m10-5h3c0 3-1 4.500-3 5M12 14v4m-4 3h8m-6-3h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.500" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m4 7.500 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-phone" viewBox="0 0 24 24"><path d="M5 4h3.500l1.700 4.200-2.200 1.400a11 11 0 0 0 5.400 5.400l1.400-2.200L19 14.500V18a2 2 0 0 1-2 2A14 14 0 0 1 3 6a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.100 7-11.500A7 7 0 0 0 5 9.500C5 14.900 12 21 12 21Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="9.500" r="2.500" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="icon-linkedin" viewBox="0 0 24 24"><path d="M5 9.500v9M5 5.500v.01M10 18.500v-9m0 4c0-2.500 1.500-4 3.500-4s3.500 1.300 3.500 4v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-facebook" viewBox="0 0 24 24"><path d="M14 8.500h2.500V5H14c-2.200 0-3.800 1.600-3.800 3.800V11H8v3.500h2.200V21H14v-6.500h2.500L17 11h-3V9.200c0-.4.300-.700.700-.700Z" fill="currentColor"/></symbol>
+    <symbol id="icon-instagram" viewBox="0 0 24 24"><rect x="3.500" y="3.500" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17" cy="7" r="1.100" fill="currentColor"/></symbol>
+    <symbol id="icon-x" viewBox="0 0 24 24"><path d="M4 4l16 16M20 4 4 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="icon-youtube" viewBox="0 0 24 24"><rect x="2.500" y="5.500" width="19" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m10 9.200 5 2.800-5 2.800V9.200Z" fill="currentColor"/></symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24"><path d="m12 3.500 2.600 5.300 5.800.8-4.200 4.100 1 5.800L12 16.800l-5.200 2.700 1-5.800-4.200-4.100 5.800-.8L12 3.500Z" fill="currentColor"/></symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5.200l3.300 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-book" viewBox="0 0 24 24"><path d="M12 6.500C10.500 5.300 8.200 4.700 4 4.700V18c4.200 0 6.500.6 8 1.800 1.500-1.200 3.800-1.800 8-1.800V4.700c-4.200 0-6.500.6-8 1.800ZM12 6.500v13.300" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-numbers" viewBox="0 0 24 24"><path d="M3.500 6h17M3.500 12h17M3.500 18h17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="8" cy="6" r="2.200" fill="currentColor"/><circle cx="15" cy="12" r="2.200" fill="currentColor"/><circle cx="10" cy="18" r="2.200" fill="currentColor"/></symbol>
+    <symbol id="icon-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18c1.400 0 2-1 2-2 0-1.500-1-1.800-1-3 0-1 .8-1.800 2-1.800H17a4 4 0 0 0 4-4C21 6.200 17 3 12 3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="7.500" cy="11" r="1.200" fill="currentColor"/><circle cx="10" cy="7.200" r="1.200" fill="currentColor"/><circle cx="14.500" cy="7" r="1.200" fill="currentColor"/></symbol>
+    <symbol id="icon-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9.500L4 20.500V5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 9.500h8M8 12.500h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="icon-music" viewBox="0 0 24 24"><path d="M9 18V6l10-2v12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.500" cy="18" r="2.500" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="16.500" cy="16" r="2.500" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.500v2.500M12 19v2.500M2.500 12H5M19 12h2.500M5.300 5.300l1.800 1.800M16.900 16.900l1.800 1.800M5.300 18.700l1.800-1.800M16.900 7.100l1.800-1.800" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="icon-blocks" viewBox="0 0 24 24"><rect x="3.500" y="12.500" width="7.500" height="7.500" rx="1.500" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13" y="12.500" width="7.500" height="7.500" rx="1.500" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="8.200" y="4" width="7.500" height="7.500" rx="1.500" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24"><path d="M12 3 4.500 6v5.500c0 4.500 3 7.800 7.500 9.500 4.500-1.700 7.500-5 7.500-9.500V6L12 3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9 12 2.200 2.200L15.500 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24"><rect x="5" y="10.500" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 10.500V8a4 4 0 0 1 8 0v2.500" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="icon-snack" viewBox="0 0 24 24"><path d="M12 8c-1-1.500-4-1.500-5.500.5S6 14 8 18c1 2 2.500 2 4 1 1.500 1 3 1 4-1 2-4 2-7.500.5-9.500S13 6.500 12 8Zm0 0c0-2 1-3.500 2.500-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14M5 19c2-4 5-7 9-9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-atom" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1.800" fill="currentColor"/><ellipse cx="12" cy="12" rx="9" ry="3.800" fill="none" stroke="currentColor" stroke-width="1.6"/><ellipse cx="12" cy="12" rx="9" ry="3.800" transform="rotate(60 12 12)" fill="none" stroke="currentColor" stroke-width="1.6"/><ellipse cx="12" cy="12" rx="9" ry="3.800" transform="rotate(120 12 12)" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="icon-chart" viewBox="0 0 24 24"><path d="M4 4v16h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="m8 15 3.500-4 3 2.500L19 7.500" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-briefcase" viewBox="0 0 24 24"><rect x="3.500" y="7.500" width="17" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9 7.500V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.500M3.500 13h17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="icon-ball" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m12 7.500 3.800 2.800-1.400 4.500H9.600l-1.400-4.500L12 7.500ZM12 3v4.500M20.500 9.800l-4.700.5M17.700 19l-3.300-4.200M6.300 19l3.300-4.200M3.500 9.800l4.700.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="icon-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.500 10.900c.7.600 1 1.300 1 2.100h5c0-.8.300-1.500 1-2.100A6 6 0 0 0 12 3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-bus" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="13" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 11h16M7 20v-3M17 20v-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="8" cy="14" r="1" fill="currentColor"/><circle cx="16" cy="14" r="1" fill="currentColor"/></symbol>
+    <symbol id="icon-chevron-down" viewBox="0 0 24 24"><path d="m6 9.500 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 12h18M12 3c2.500 2.600 3.800 5.600 3.800 9S14.500 18.400 12 21c-2.500-2.600-3.800-5.600-3.800-9S9.500 5.600 12 3Z" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="icon-laptop" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="10" rx="1.800" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.500 19h19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="icon-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5.500 11.500a6.500 6.500 0 0 0 13 0M12 18v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="icon-chevron-left" viewBox="0 0 24 24"><path d="m14.500 6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-chevron-right" viewBox="0 0 24 24"><path d="m9.500 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-play" viewBox="0 0 24 24"><path d="M8 5.500v13l11-6.500-11-6.500Z" fill="currentColor"/></symbol>
+    <symbol id="icon-pause" viewBox="0 0 24 24"><path d="M8 5h3v14H8zM13 5h3v14h-3z" fill="currentColor"/></symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 4.500 4.500" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="icon-books" viewBox="0 0 24 24"><path d="M4 4h4v16H4zM9 7h4v13H9zM14.500 5.500l3.800-1 3 14.500-3.800 1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-pencil" viewBox="0 0 24 24"><path d="M4 20l1-4L16.500 4.500a2 2 0 0 1 3 0l0 0a2 2 0 0 1 0 3L8 19l-4 1Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-quiet" viewBox="0 0 24 24"><path d="M4 9.500h3.500L12 5.500v13l-4.500-4H4v-5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m16 9.500 5 5M21 9.500l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="icon-return" viewBox="0 0 24 24"><path d="M9 6 4 11l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 11h10a5 5 0 0 1 0 10h-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="icon-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9.500 9.500a2.500 2.500 0 1 1 3.500 2.300c-.7.400-1 .9-1 1.700M12 17v.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="icon-dictionary" viewBox="0 0 24 24"><path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M5 18a2 2 0 0 1 2-2h12M9 8h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="icon-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v5.500M12 7.500v.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  </svg>
+
+  <!-- ======================================================
+       SITE HEADER: the same navbar + slide-in mega menu as the homepage.
+       Styles: site-header.css   Behaviour: site-header.js
+       ====================================================== -->
+  <header class="navbar" id="top">
+    <div class="navbar__inner">
+
+      <!-- A. Logo (inline SVG: shield + open book + star) -->
+      <a class="logo" href="index.html" aria-label="Crestview Academy – home">
+        <svg class="logo__mark" viewBox="0 0 48 56" role="img" aria-hidden="true" focusable="false">
+          <path d="M24 2 4 9v17c0 14 8.6 24.2 20 28 11.4-3.8 20-14 20-28V9L24 2Z" fill="#1d5fd8"/>
+          <path d="M24 2 4 9v17c0 14 8.6 24.2 20 28V2Z" fill="#164bb0"/>
+          <path d="M11 24.5c4.2-1.6 8.6-1.4 13 1.2 4.4-2.6 8.8-2.8 13-1.2V38c-4.2-1.5-8.6-1.2-13 1.4-4.4-2.6-8.8-2.9-13-1.4V24.5Z" fill="#fff"/>
+          <path d="M24 25.7v13.7" stroke="#1d5fd8" stroke-width="1.6"/>
+          <path d="m24 9.5 2.1 4.3 4.7.7-3.4 3.3.8 4.7-4.2-2.2-4.2 2.2.8-4.7-3.4-3.3 4.7-.7L24 9.5Z" fill="#ffc928"/>
+        </svg>
+        <span class="logo__text">
+          <span class="logo__name">Crestview</span>
+          <span class="logo__tagline">Academy</span>
+        </span>
+      </a>
+
+      <!-- B. Main navigation (hidden below 1100px; those links reappear inside the mega menu) -->
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul class="main-nav__list">
+          <li><a class="main-nav__link" href="index.html">Home</a></li>
+          <li><a class="main-nav__link" href="about.html">About Us</a></li>
+          <li><a aria-disabled="true" class="main-nav__link is-disabled">Courses</a></li>
+          <li><a aria-disabled="true" class="main-nav__link is-disabled">Result</a></li>
+          <li><a aria-disabled="true" class="main-nav__link is-disabled">Faculty</a></li>
+          <li><a aria-disabled="true" class="main-nav__link is-disabled">Gallery</a></li>
+          <li><a class="main-nav__link" href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
+
+      <!-- C + D. CTA button and hamburger -->
+      <div class="navbar__actions">
+        <a class="navbar__cta" href="contact.html">Book Free Demo Class</a>
+        <button class="hamburger" id="menu-toggle" type="button"
+                aria-label="Open menu" aria-expanded="false" aria-controls="mega-menu">
+          <span class="hamburger__bar"></span>
+          <span class="hamburger__bar"></span>
+          <span class="hamburger__bar"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Slide-in mega menu (sits inside the header but is position: fixed) -->
+    <div class="mega" id="mega">
+      <div class="mega__overlay" id="mega-overlay"></div>
+
+      <aside class="mega__panel" id="mega-menu" role="dialog" aria-modal="true"
+             aria-label="Site menu" aria-hidden="true" inert>
+
+        <div class="mega__header">
+          <span class="mega__title">Explore Crestview</span>
+          <!-- Sits exactly where the hamburger is, so it also reads as "tap the burger again to close" -->
+          <button class="mega__close" id="mega-close" type="button" aria-label="Close menu">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+              <path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="mega__body">
+
+          <!-- Six main categories (tabs) -->
+          <div class="mega__categories" role="tablist" aria-label="Menu categories" aria-orientation="vertical">
+            <button class="mega-tab is-active" role="tab" type="button" id="tab-about"
+                    aria-selected="true" aria-controls="panel-about"><span class="mega-tab__num">01</span>About the School</button>
+            <button class="mega-tab" role="tab" type="button" id="tab-academics"
+                    aria-selected="false" aria-controls="panel-academics" tabindex="-1"><span class="mega-tab__num">02</span>Academics</button>
+            <button class="mega-tab" role="tab" type="button" id="tab-admissions"
+                    aria-selected="false" aria-controls="panel-admissions" tabindex="-1"><span class="mega-tab__num">03</span>Admissions</button>
+            <button class="mega-tab" role="tab" type="button" id="tab-student-life"
+                    aria-selected="false" aria-controls="panel-student-life" tabindex="-1"><span class="mega-tab__num">04</span>Student Life</button>
+            <button class="mega-tab" role="tab" type="button" id="tab-community"
+                    aria-selected="false" aria-controls="panel-community" tabindex="-1"><span class="mega-tab__num">05</span>Our Community</button>
+            <button class="mega-tab" role="tab" type="button" id="tab-resources"
+                    aria-selected="false" aria-controls="panel-resources" tabindex="-1"><span class="mega-tab__num">06</span>Resources</button>
+          </div>
+
+          <!-- Submenu area: five links + one image per category -->
+          <div class="mega__content">
+
+            <div class="mega-panel" role="tabpanel" id="panel-about" aria-labelledby="tab-about">
+              <ul class="mega-panel__links">
+                <li><a aria-disabled="true" class="is-disabled">Our History</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Mission and Vision</a></li>
+                <li><a aria-disabled="true" class="is-disabled">School Leadership</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Accreditation</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Why Choose Us?</a></li>
+              </ul>
+              <figure class="mega-panel__figure">
+                <img src="https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?auto=format&fit=crop&q=75&w=800" width="800" height="1000" alt="A bright, modern school building" loading="lazy">
+              </figure>
+            </div>
+
+            <div class="mega-panel" role="tabpanel" id="panel-academics" aria-labelledby="tab-academics" hidden>
+              <ul class="mega-panel__links">
+                <li><a href="primary.html">Primary Education</a></li>
+                <li><a href="secondary.html">Secondary Education</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Curriculum</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Academic Calendar</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Learning Approach</a></li>
+              </ul>
+              <figure class="mega-panel__figure">
+                <img src="https://images.unsplash.com/photo-1741708011528-e4874c6d869e?auto=format&fit=crop&q=75&w=800" width="800" height="1000" alt="Tall wooden bookshelves filled with books" loading="lazy">
+              </figure>
+            </div>
+
+            <div class="mega-panel" role="tabpanel" id="panel-admissions" aria-labelledby="tab-admissions" hidden>
+              <ul class="mega-panel__links">
+                <li><a aria-disabled="true" class="is-disabled">Admission Requirements</a></li>
+                <li><a aria-disabled="true" class="is-disabled">How to Apply</a></li>
+                <li><a aria-disabled="true" class="is-disabled">School Fees</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Scholarships</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Book a School Tour</a></li>
+              </ul>
+              <figure class="mega-panel__figure">
+                <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&q=75&w=800" width="800" height="1000" alt="An empty classroom with desks and a chalkboard" loading="lazy">
+              </figure>
+            </div>
+
+            <div class="mega-panel" role="tabpanel" id="panel-student-life" aria-labelledby="tab-student-life" hidden>
+              <ul class="mega-panel__links">
+                <li><a aria-disabled="true" class="is-disabled">Clubs and Societies</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Sports and Athletics</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Student Leadership</a></li>
+                <li><a aria-disabled="true" class="is-disabled">School Events</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Student Support</a></li>
+              </ul>
+              <figure class="mega-panel__figure">
+                <img src="https://images.unsplash.com/photo-1761039808159-f02b58f07032?auto=format&fit=crop&q=75&w=800" width="800" height="1000" alt="Children sitting in a circle for an outdoor activity" loading="lazy">
+              </figure>
+            </div>
+
+            <div class="mega-panel" role="tabpanel" id="panel-community" aria-labelledby="tab-community" hidden>
+              <ul class="mega-panel__links">
+                <li><a aria-disabled="true" class="is-disabled">Meet Our Teachers</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Parents and Guardians</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Alumni Network</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Community Outreach</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Student Achievements</a></li>
+              </ul>
+              <figure class="mega-panel__figure">
+                <img src="https://images.unsplash.com/photo-1633734973050-d6499a977c17?auto=format&fit=crop&q=75&w=800" width="800" height="1000" alt="Graduates celebrating in light blue gowns" loading="lazy">
+              </figure>
+            </div>
+
+            <div class="mega-panel" role="tabpanel" id="panel-resources" aria-labelledby="tab-resources" hidden>
+              <ul class="mega-panel__links">
+                <li><a href="library.html">Learning Resources</a></li>
+                <li><a href="announcements.html">News and Updates</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Frequently Asked Questions</a></li>
+                <li><a aria-disabled="true" class="is-disabled">Downloadable Documents</a></li>
+                <li><a href="contact.html">Contact Support</a></li>
+              </ul>
+              <figure class="mega-panel__figure">
+                <img src="https://images.unsplash.com/photo-1637681068516-2b22116e68cf?auto=format&fit=crop&q=75&w=800" width="800" height="1000" alt="Stacks of books" loading="lazy">
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick links: only shown on screens where the main navigation bar is hidden -->
+        <nav class="mega__quick" aria-label="Quick links">
+          <ul class="mega__quick-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a aria-disabled="true" class="is-disabled">Courses</a></li>
+            <li><a aria-disabled="true" class="is-disabled">Result</a></li>
+            <li><a aria-disabled="true" class="is-disabled">Faculty</a></li>
+            <li><a aria-disabled="true" class="is-disabled">Gallery</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+          <a class="mega__quick-cta" href="contact.html">Book Free Demo Class</a>
+        </nav>
+      </aside>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ======================================================
+         SECTION 1: PAGE HERO
+         ====================================================== -->
+    <section class="p-hero lib-hero" id="hero" aria-labelledby="page-title">
+      <img class="p-hero__bg" src="https://images.unsplash.com/photo-1741708011528-e4874c6d869e?auto=format&fit=crop&q=75&w=1920" width="1920" height="1280" alt="Tall wooden bookshelves filled with colourful books">
+      <div class="p-hero__overlay" aria-hidden="true"></div>
+      <div class="container p-hero__content">
+        <nav class="crumbs crumbs--light" aria-label="Breadcrumb">
+          <ol class="crumbs__list">
+            <li><a href="index.html">Home</a></li>
+            <li aria-current="page">Library</li>
+          </ol>
+        </nav>
+        <p class="p-hero__eyebrow">Crestview Academy Library</p>
+        <h1 class="p-hero__title" id="page-title">Discover a World of Knowledge</h1>
+        <p class="p-hero__lead">Explore books, develop new skills, and discover endless opportunities to learn.</p>
+        <div class="p-hero__buttons">
+          <a class="btn btn--green" href="#resources">Explore Our Resources
+            <svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="#visit">
+            <svg class="icon" aria-hidden="true"><use href="#icon-pin"/></svg>Visit Our Library
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         SECTION 2: WELCOME TO THE LIBRARY
+         ====================================================== -->
+    <section class="welcome section" id="welcome" aria-labelledby="welcome-title">
+      <div class="container welcome__grid">
+        <div class="welcome__media reveal">
+          <span class="welcome__shape" aria-hidden="true"></span>
+          <img class="welcome__photo" src="https://images.unsplash.com/photo-1741699428220-65f37f3fbbcb?auto=format&fit=crop&q=75&w=1000" width="1000" height="667" alt="A student reading at a library table surrounded by books" loading="lazy">
+          <img class="welcome__photo-small" src="https://images.unsplash.com/photo-1599689868384-59cb2b01bb21?auto=format&fit=crop&q=75&w=500" width="500" height="333" alt="A young child reading a book at a wooden table" loading="lazy">
+        </div>
+        <div class="welcome__text reveal">
+          <p class="eyebrow">Welcome</p>
+          <h2 class="section-title" id="welcome-title">Welcome to <span class="accent">Our Library</span></h2>
+          <p>A library is more than a room of books. It is where curiosity is fed, where reading becomes a habit and where pupils learn to find things out for themselves. Our library supports learning at every stage of school life, from a first picture book to independent research for examinations.</p>
+          <ul class="stage-list">
+            <li><svg class="icon" aria-hidden="true"><use href="#icon-heart"/></svg><span><strong>Nursery</strong>Picture books, rhymes and shared story time that spark a love of reading.</span></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#icon-book"/></svg><span><strong>Primary</strong>Storybooks, early non-fiction and reading habits that build confident readers.</span></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#icon-cap"/></svg><span><strong>Secondary</strong>Reference, literature and revision resources for deeper study and exam preparation.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         SECTION 3: RESOURCES AND COLLECTIONS
+         The collection areas below are examples. The school confirms what is on its shelves.
+         ====================================================== -->
+    <section class="section section--paper" id="resources" aria-labelledby="res-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow">Collections</p>
+          <h2 class="section-title" id="res-title">Resources and <span class="accent">Collections</span></h2>
+          <p class="section-sub">The kinds of material a school library offers. The school will confirm exactly what is available on its shelves.</p>
+        </header>
+        <ul class="res-grid">
+          <li class="res-card reveal"><span class="res-card__icon"><svg class="icon" aria-hidden="true"><use href="#icon-book"/></svg></span><h3 class="res-card__title">Storybooks</h3><p>Illustrated stories and early readers that make reading fun for young learners.</p></li>
+          <li class="res-card reveal delay-1"><span class="res-card__icon"><svg class="icon" aria-hidden="true"><use href="#icon-books"/></svg></span><h3 class="res-card__title">Fiction</h3><p>Novels, short stories and adventure that grow imagination and vocabulary.</p></li>
+          <li class="res-card reveal delay-2"><span class="res-card__icon"><svg class="icon" aria-hidden="true"><use href="#icon-bulb"/></svg></span><h3 class="res-card__title">Non-Fiction</h3><p>Fact-based books on people, places, nature, technology and the world around us.</p></li>
+          <li class="res-card reveal delay-3"><span class="res-card__icon"><svg class="icon" aria-hidden="true"><use href="#icon-dictionary"/></svg></span><h3 class="res-card__title">Dictionaries and Encyclopedias</h3><p>Reference works for checking words, facts and ideas while studying.</p></li>
+          <li class="res-card reveal"><span class="res-card__icon"><svg class="icon" aria-hidden="true"><use href="#icon-flask"/></svg></span><h3 class="res-card__title">Science and Maths</h3><p>Books that explain how things work and make numbers and experiments easier to grasp.</p></li>
+          <li class="res-card reveal delay-1"><span class="res-card__icon"><svg class="icon" aria-hidden="true"><use href="#icon-globe"/></svg></span><h3 class="res-card__title">History and Geography</h3><p>Atlases, histories and cultural studies that connect pupils to the wider world.</p></li>
+          <li class="res-card reveal delay-2"><span class="res-card__icon"><svg class="icon" aria-hidden="true"><use href="#icon-pencil"/></svg></span><h3 class="res-card__title">Exam Preparation</h3><p>Revision guides and practice material to support students ahead of examinations.</p></li>
+          <li class="res-card reveal delay-3"><span class="res-card__icon"><svg class="icon" aria-hidden="true"><use href="#icon-laptop"/></svg></span><h3 class="res-card__title">Digital Resources</h3><p>E-books and online learning tools, where the school provides them.</p><span class="badge">If available</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         SECTION 4: EXPLORE BOOKS (working search + category filters)
+         The books come from the BOOKS list in library.js. They are SAMPLES, not the school's real catalogue.
+         ====================================================== -->
+    <section class="section" id="books" aria-labelledby="books-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow">Explore Books</p>
+          <h2 class="section-title" id="books-title">Browse a <span class="accent">Sample Shelf</span></h2>
+          <p class="section-sub">Try the search and category filters below. These are sample placeholder books to show how the shelf will work. They are not the library's real catalogue.</p>
+        </header>
+
+        <div class="catalogue__tools reveal">
+          <form class="search" role="search" id="book-search-form" aria-label="Search sample books">
+            <label class="visually-hidden" for="book-search">Search by title, author or category</label>
+            <svg class="icon search__icon" aria-hidden="true"><use href="#icon-search"/></svg>
+            <input class="search__input" id="book-search" type="search" placeholder="Search by title, author or category" autocomplete="off">
+            <button class="search__clear" id="book-search-clear" type="button" aria-label="Clear search" hidden>&times;</button>
+          </form>
+          <div class="chip-row" id="chip-row" role="group" aria-label="Filter by category"></div>
+        </div>
+
+        <p class="catalogue__count" id="book-count" role="status" aria-live="polite"></p>
+        <ul class="book-grid" id="book-grid" aria-label="Sample books"></ul>
+        <div class="catalogue__empty" id="book-empty" hidden>
+          <p><strong>No sample books match your search.</strong></p>
+          <p>Try a different word, or clear the search and choose &ldquo;All&rdquo;.</p>
+        </div>
+        <noscript><p class="sample-note sample-note--center">The sample shelf needs JavaScript to display.</p></noscript>
+        <p class="sample-note sample-note--center">All titles, authors and covers here are invented placeholders for layout only. Replace them with your real catalogue.</p>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         SECTION 5: READING AND LEARNING SPACES
+         Photos are examples of the kind of space a library can offer. No facility is claimed here.
+         ====================================================== -->
+    <section class="section section--paper" id="spaces" aria-labelledby="spaces-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow">Spaces</p>
+          <h2 class="section-title" id="spaces-title">Reading and <span class="accent">Learning Spaces</span></h2>
+          <p class="section-sub">Ideas for the kinds of spaces a school library can offer. The photos are stock images, and the school will confirm which spaces it has.</p>
+        </header>
+        <div class="space-grid">
+          <figure class="space reveal"><span class="badge">Example</span><img src="https://images.unsplash.com/photo-1763582516354-e417d2902207?auto=format&fit=crop&q=75&w=800" width="800" height="600" alt="A bright library hall with shelves and a staircase" loading="lazy"><figcaption><span class="space__name"><svg class="icon" aria-hidden="true"><use href="#icon-books"/></svg>Main Reading Hall</span><span class="space__note">Space for browsing and reading</span></figcaption></figure>
+          <figure class="space reveal delay-1"><span class="badge">Example</span><img src="https://images.unsplash.com/photo-1532789339108-2ebc484efbf1?auto=format&fit=crop&q=75&w=800" width="800" height="600" alt="Two children reading together on a sofa" loading="lazy"><figcaption><span class="space__name"><svg class="icon" aria-hidden="true"><use href="#icon-heart"/></svg>Children&rsquo;s Corner</span><span class="space__note">A cosy place for young readers</span></figcaption></figure>
+          <figure class="space reveal delay-2"><span class="badge">Example</span><img src="https://images.unsplash.com/photo-1514513452089-17f8a9771ee8?auto=format&fit=crop&q=75&w=800" width="800" height="600" alt="People studying at tables inside a library" loading="lazy"><figcaption><span class="space__name"><svg class="icon" aria-hidden="true"><use href="#icon-pencil"/></svg>Study Tables</span><span class="space__note">Room for homework and revision</span></figcaption></figure>
+          <figure class="space reveal"><span class="badge">Example</span><img src="https://images.unsplash.com/photo-1602114324193-e1c1b41dcde5?auto=format&fit=crop&q=75&w=800" width="800" height="600" alt="A room of desks with computers" loading="lazy"><figcaption><span class="space__name"><svg class="icon" aria-hidden="true"><use href="#icon-laptop"/></svg>Computer Area</span><span class="space__note">Only if the school provides one</span></figcaption></figure>
+          <figure class="space reveal delay-1"><span class="badge">Example</span><img src="https://images.unsplash.com/photo-1721702754494-fdd7189f946c?auto=format&fit=crop&q=75&w=800" width="800" height="600" alt="A quiet library aisle lined with books" loading="lazy"><figcaption><span class="space__name"><svg class="icon" aria-hidden="true"><use href="#icon-quiet"/></svg>Quiet Zone</span><span class="space__note">A calm place to focus</span></figcaption></figure>
+          <figure class="space reveal delay-2"><span class="badge">Example</span><img src="https://images.unsplash.com/photo-1661827291034-a7afb7dd1601?auto=format&fit=crop&q=75&w=800" width="800" height="600" alt="A shelf of children's books" loading="lazy"><figcaption><span class="space__name"><svg class="icon" aria-hidden="true"><use href="#icon-book"/></svg>Picture-Book Shelves</span><span class="space__note">Low shelves within children&rsquo;s reach</span></figcaption></figure>
+        </div>
+        <p class="sample-note sample-note--center">Stock photos for layout only. Replace with photos of your own library and remove any space it does not have.</p>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         SECTION 6: DIGITAL LIBRARY
+         Shown honestly as "not set up yet". Set DIGITAL_LIBRARY_URL in library.js to turn on the button.
+         ====================================================== -->
+    <section class="digital" id="digital" aria-labelledby="digital-title">
+      <div class="container digital__grid">
+        <div class="reveal">
+          <p class="eyebrow eyebrow--light">Digital Library</p>
+          <h2 class="section-title" id="digital-title">Learning Beyond <span class="accent">the Shelves</span></h2>
+          <p class="digital__intro">A digital library can add e-books, online reference tools and learning videos to a school library. This is an optional extra and is shown here as a possibility, not as a service the school already runs.</p>
+          <ul class="digital__chips" aria-label="Examples of digital resources">
+            <li><svg class="icon" aria-hidden="true"><use href="#icon-book"/></svg>E-books</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#icon-dictionary"/></svg>Online reference</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#icon-play"/></svg>Learning videos</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#icon-pencil"/></svg>Practice material</li>
+          </ul>
+          <p class="status-box" id="digital-status"><svg class="icon" aria-hidden="true"><use href="#icon-info"/></svg><span>No digital library has been set up on this site yet. When the school has one, its link will be added here. No login or access details are shown until then.</span></p>
+          <a class="btn btn--green" id="digital-btn" href="#digital" target="_blank" rel="noopener" hidden>Explore Digital Resources
+            <svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
+          </a>
+        </div>
+        <div class="digital__media reveal">
+          <img src="https://images.unsplash.com/photo-1720048171315-b76d4d7269f4?auto=format&fit=crop&q=75&w=1000" width="1000" height="667" alt="A person using a tablet at a table" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         SECTION 7: ACTIVITIES AND READING PROGRAMMES (examples; the school confirms which it runs)
+         ====================================================== -->
+    <section class="section" id="activities" aria-labelledby="act-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow">Activities</p>
+          <h2 class="section-title" id="act-title">Activities and <span class="accent">Reading Programmes</span></h2>
+          <p class="section-sub">Ways a library can bring reading to life. These are examples, and the school will confirm which programmes it runs.</p>
+        </header>
+        <ul class="act-grid">
+          <li class="act reveal"><div class="act__media"><img src="https://images.unsplash.com/photo-1532789339108-2ebc484efbf1?auto=format&fit=crop&q=75&w=700" width="700" height="438" alt="Children reading together" loading="lazy"><span class="act__icon"><svg class="icon" aria-hidden="true"><use href="#icon-users"/></svg></span></div><div class="act__body"><h3 class="act__title">Reading Clubs</h3><p>Small groups that read, share and talk about books together.</p></div></li>
+          <li class="act reveal delay-1"><div class="act__media"><img src="https://images.unsplash.com/photo-1714646793149-189cc073b387?auto=format&fit=crop&q=75&w=700" width="700" height="394" alt="An adult reading a story to a young child" loading="lazy"><span class="act__icon"><svg class="icon" aria-hidden="true"><use href="#icon-mic"/></svg></span></div><div class="act__body"><h3 class="act__title">Storytelling Sessions</h3><p>Story time that builds listening, imagination and love of language.</p></div></li>
+          <li class="act reveal delay-2"><div class="act__media"><img src="https://images.unsplash.com/photo-1554721299-e0b8aa7666ce?auto=format&fit=crop&q=75&w=700" width="700" height="467" alt="A pupil writing in a notebook" loading="lazy"><span class="act__icon"><svg class="icon" aria-hidden="true"><use href="#icon-pencil"/></svg></span></div><div class="act__body"><h3 class="act__title">Book Reviews</h3><p>Pupils write and share short reviews to recommend books to friends.</p></div></li>
+          <li class="act reveal"><div class="act__media"><img src="https://images.unsplash.com/photo-1576108700272-8d9f86c51273?auto=format&fit=crop&q=75&w=700" width="700" height="450" alt="A smiling boy reading a book" loading="lazy"><span class="act__icon"><svg class="icon" aria-hidden="true"><use href="#icon-trophy"/></svg></span></div><div class="act__body"><h3 class="act__title">Reading Competitions</h3><p>Friendly challenges that reward curiosity and steady reading.</p></div></li>
+          <li class="act reveal delay-1"><div class="act__media"><img src="https://images.unsplash.com/photo-1586442454519-44e70bd51f82?auto=format&fit=crop&q=75&w=700" width="700" height="467" alt="A girl reading a book" loading="lazy"><span class="act__icon"><svg class="icon" aria-hidden="true"><use href="#icon-star"/></svg></span></div><div class="act__body"><h3 class="act__title">Spelling Competitions</h3><p>Word games and spelling contests that strengthen vocabulary.</p></div></li>
+          <li class="act reveal delay-2"><div class="act__media"><img src="https://images.unsplash.com/photo-1738879348809-bbf70f1652e6?auto=format&fit=crop&q=75&w=700" width="700" height="467" alt="A globe sitting on a library table" loading="lazy"><span class="act__icon"><svg class="icon" aria-hidden="true"><use href="#icon-search"/></svg></span></div><div class="act__body"><h3 class="act__title">Research Projects</h3><p>Guided projects that teach pupils to find, check and use information.</p></div></li>
+          <li class="act act--wide reveal"><div class="act__media"><img src="https://images.unsplash.com/photo-1632217131414-be0bc91aedb9?auto=format&fit=crop&q=75&w=1000" width="1000" height="667" alt="A school library with full bookshelves" loading="lazy"><span class="act__icon"><svg class="icon" aria-hidden="true"><use href="#icon-palette"/></svg></span></div><div class="act__body"><h3 class="act__title">Literary Activities</h3><p>Poetry, drama, creative writing and author-themed events that celebrate literature and give pupils a voice. Dates and details are to be confirmed by the school.</p></div></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         SECTION 8: HOW TO USE THE LIBRARY
+         ====================================================== -->
+    <section class="section section--paper" id="how" aria-labelledby="how-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow">Getting Started</p>
+          <h2 class="section-title" id="how-title">How to Use <span class="accent">the Library</span></h2>
+          <p class="section-sub">Five simple steps from walking in to taking a book home. The school confirms its own procedure.</p>
+        </header>
+        <ol class="how">
+          <li class="how__step reveal"><span class="how__icon"><svg class="icon" aria-hidden="true"><use href="#icon-search"/></svg></span><h3 class="how__title">Search or browse</h3><p>Look along the shelves or search for a topic, title or author.</p></li>
+          <li class="how__step reveal delay-1"><span class="how__icon"><svg class="icon" aria-hidden="true"><use href="#icon-book"/></svg></span><h3 class="how__title">Choose a book</h3><p>Pick something that suits your class and your interests.</p></li>
+          <li class="how__step reveal delay-2"><span class="how__icon"><svg class="icon" aria-hidden="true"><use href="#icon-help"/></svg></span><h3 class="how__title">Ask for help</h3><p>The library staff can help you find what you need.</p></li>
+          <li class="how__step reveal delay-3"><span class="how__icon"><svg class="icon" aria-hidden="true"><use href="#icon-check"/></svg></span><h3 class="how__title">Borrow or read</h3><p>Read in the library or borrow, following the school&rsquo;s procedure.</p></li>
+          <li class="how__step reveal"><span class="how__icon"><svg class="icon" aria-hidden="true"><use href="#icon-return"/></svg></span><h3 class="how__title">Return on time</h3><p>Bring books back so that others can enjoy them too.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         SECTION 9: LIBRARY RULES AND GUIDELINES
+         No real policies have been invented. Replace the [placeholders] with the school's actual rules.
+         ====================================================== -->
+    <section class="section" id="rules" aria-labelledby="rules-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow">Guidelines</p>
+          <h2 class="section-title" id="rules-title">Library Rules and <span class="accent">Guidelines</span></h2>
+          <p class="section-sub">General good habits for any library. The school&rsquo;s official policies are shown as placeholders until confirmed.</p>
+        </header>
+        <div class="rules__grid">
+          <ul class="rules__list reveal">
+            <li><svg class="icon" aria-hidden="true"><use href="#icon-check"/></svg>Keep the library calm and quiet so everyone can focus.</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#icon-check"/></svg>Handle books gently and treat them with care.</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#icon-check"/></svg>Return books to the right place or hand them to the library staff.</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#icon-check"/></svg>Be kind and respectful to other readers and to staff.</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#icon-check"/></svg>Ask for help whenever you need it.</li>
+          </ul>
+          <div class="policy reveal">
+            <h3 class="policy__title">Borrowing Policy</h3>
+            <p class="sample-note">Placeholders. The school will confirm the real details.</p>
+            <dl>
+              <div><dt>Borrowing period</dt><dd><span class="ph">[Add borrowing period]</span></dd></div>
+              <div><dt>Number of books per pupil</dt><dd><span class="ph">[Add limit]</span></dd></div>
+              <div><dt>Late returns and fines</dt><dd><span class="ph">[Add policy, if any]</span></dd></div>
+              <div><dt>Lost or damaged books</dt><dd><span class="ph">[Add policy]</span></dd></div>
+              <div><dt>Membership or registration</dt><dd><span class="ph">[Add how pupils join]</span></dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         SECTION 10: OPENING HOURS AND CONTACT (all placeholders)
+         ====================================================== -->
+    <section class="section section--paper" id="visit" aria-labelledby="visit-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow">Visit Us</p>
+          <h2 class="section-title" id="visit-title">Opening Hours and <span class="accent">Contact</span></h2>
+          <p class="section-sub">Details below are placeholders. Replace them with the library&rsquo;s real information before publishing.</p>
+        </header>
+        <div class="visit__grid">
+          <div class="info-card reveal"><span class="info-card__icon"><svg class="icon" aria-hidden="true"><use href="#icon-clock"/></svg></span><div><h3>Opening Hours</h3><p><span class="ph">[Add days and opening times]</span></p></div></div>
+          <div class="info-card reveal delay-1"><span class="info-card__icon"><svg class="icon" aria-hidden="true"><use href="#icon-pin"/></svg></span><div><h3>Location</h3><p><span class="ph">[Add where the library is on campus]</span></p></div></div>
+          <div class="info-card reveal"><span class="info-card__icon"><svg class="icon" aria-hidden="true"><use href="#icon-phone"/></svg></span><div><h3>Phone</h3><p><a href="tel:+000000000000">+000 000 000 0000</a> <span class="ph">[placeholder]</span></p></div></div>
+          <div class="info-card reveal delay-1"><span class="info-card__icon"><svg class="icon" aria-hidden="true"><use href="#icon-mail"/></svg></span><div><h3>Email</h3><p><a href="mailto:info@schoolname.com">info@schoolname.com</a> <span class="ph">[placeholder]</span></p></div></div>
+        </div>
+        <div class="visit__how reveal">
+          <div>
+            <h3>Questions about the library?</h3>
+            <p>Get in touch with the school and we will point you to the right person.</p>
+          </div>
+          <a class="btn btn--green" href="contact.html">Contact the Library
+            <svg class="icon" aria-hidden="true"><use href="#icon-mail"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         SECTION 11: PHOTO GALLERY (carousel)
+         ====================================================== -->
+    <section class="gallery-sec section" id="gallery" aria-labelledby="gallery-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow">Gallery</p>
+          <h2 class="section-title" id="gallery-title">Moments in <span class="accent">the Library</span></h2>
+          <p class="section-sub">Use the arrows, dots, swipe or your keyboard&rsquo;s left and right keys.</p>
+        </header>
+
+        <div class="carousel reveal" id="library-carousel" role="region" aria-roledescription="carousel" aria-label="Library photo gallery">
+          <div class="carousel__viewport">
+            <ul class="carousel__track">
+              <li class="carousel__slide" role="group" aria-roledescription="slide" aria-label="1 of 8"><figure><img src="https://images.unsplash.com/photo-1741708011528-e4874c6d869e?auto=format&fit=crop&q=75&w=800" width="800" height="600" alt="Wooden bookshelves full of books" loading="lazy"><figcaption>Shelves of Books</figcaption></figure></li>
+              <li class="carousel__slide" role="group" aria-roledescription="slide" aria-label="2 of 8"><figure><img src="https://images.unsplash.com/photo-1599689868384-59cb2b01bb21?auto=format&fit=crop&q=75&w=800" width="800" height="600" alt="A child reading at a table" loading="lazy"><figcaption>Young Readers</figcaption></figure></li>
+              <li class="carousel__slide" role="group" aria-roledescription="slide" aria-label="3 of 8"><figure><img src="https://images.unsplash.com/photo-1532789339108-2ebc484efbf1?auto=format&fit=crop&q=75&w=800" width="800" height="600" alt="Two children reading on a sofa" loading="lazy"><figcaption>Reading Together</figcaption></figure></li>
+              <li class="carousel__slide" role="group" aria-roledescription="slide" aria-label="4 of 8"><figure><img src="https://images.unsplash.com/photo-1741699428220-65f37f3fbbcb?auto=format&fit=crop&q=75&w=800" width="800" height="600" alt="A student studying with books" loading="lazy"><figcaption>Quiet Study</figcaption></figure></li>
+              <li class="carousel__slide" role="group" aria-roledescription="slide" aria-label="5 of 8"><figure><img src="https://images.unsplash.com/photo-1696395050055-eb7a315bb1cb?auto=format&fit=crop&q=75&w=800" width="800" height="600" alt="A large library with many books" loading="lazy"><figcaption>Learning Spaces</figcaption></figure></li>
+              <li class="carousel__slide" role="group" aria-roledescription="slide" aria-label="6 of 8"><figure><img src="https://images.unsplash.com/photo-1718327453695-4d32b94c90a4?auto=format&fit=crop&q=75&w=800" width="800" height="600" alt="Rows of library bookshelves" loading="lazy"><figcaption>Browsing the Stacks</figcaption></figure></li>
+              <li class="carousel__slide" role="group" aria-roledescription="slide" aria-label="7 of 8"><figure><img src="https://images.unsplash.com/photo-1576108700272-8d9f86c51273?auto=format&fit=crop&q=75&w=800" width="800" height="600" alt="A smiling boy reading a book" loading="lazy"><figcaption>Joy of Reading</figcaption></figure></li>
+              <li class="carousel__slide" role="group" aria-roledescription="slide" aria-label="8 of 8"><figure><img src="https://images.unsplash.com/photo-1714646793149-189cc073b387?auto=format&fit=crop&q=75&w=800" width="800" height="600" alt="An adult reading to a little girl" loading="lazy"><figcaption>Story Time</figcaption></figure></li>
+            </ul>
+          </div>
+
+          <div class="carousel__controls">
+            <button class="carousel__btn carousel__btn--prev" type="button" aria-label="Previous photo"><svg class="icon" aria-hidden="true"><use href="#icon-chevron-left"/></svg></button>
+            <div class="carousel__dots" role="group" aria-label="Choose photo"></div>
+            <button class="carousel__btn carousel__btn--next" type="button" aria-label="Next photo"><svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"/></svg></button>
+            <button class="carousel__toggle" type="button" aria-pressed="false">
+              <svg class="icon carousel__toggle-icon" aria-hidden="true"><use href="#icon-pause"/></svg>
+              <span class="carousel__toggle-text">Pause slideshow</span>
+            </button>
+          </div>
+          <p class="visually-hidden" id="carousel-status" role="status" aria-live="polite"></p>
+        </div>
+        <p class="sample-note sample-note--center">Stock photos for layout only. Replace with photos of your own library (with permission).</p>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         SECTION 12: FAQ (accessible accordion; answers are placeholders)
+         ====================================================== -->
+    <section class="faq section section--paper" id="faq" aria-labelledby="faq-title">
+      <div class="container faq__wrap">
+        <header class="section-head reveal">
+          <p class="eyebrow">FAQ</p>
+          <h2 class="section-title" id="faq-title">Frequently Asked <span class="accent">Questions</span></h2>
+          <p class="section-sub">Quick answers about the library. The school confirms all specific details.</p>
+        </header>
+
+        <div class="faq__list reveal" id="faq-list">
+          <div class="faq-item">
+            <h3 class="faq-item__q"><button class="faq-item__btn" type="button" id="faq-q1" aria-expanded="false" aria-controls="faq-a1"><span>Who can use the library?</span><svg class="icon" aria-hidden="true"><use href="#icon-chevron-down"/></svg></button></h3>
+            <div class="faq-item__a" id="faq-a1" role="region" aria-labelledby="faq-q1" hidden><p><span class="ph">[Add who may use the library, for example pupils by class and staff.]</span> Please contact the school to confirm.</p></div>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-item__q"><button class="faq-item__btn" type="button" id="faq-q2" aria-expanded="false" aria-controls="faq-a2"><span>How do I borrow a book?</span><svg class="icon" aria-hidden="true"><use href="#icon-chevron-down"/></svg></button></h3>
+            <div class="faq-item__a" id="faq-a2" role="region" aria-labelledby="faq-q2" hidden><p><span class="ph">[Add the school's borrowing procedure.]</span> The steps in &ldquo;How to Use the Library&rdquo; are a general guide only.</p></div>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-item__q"><button class="faq-item__btn" type="button" id="faq-q3" aria-expanded="false" aria-controls="faq-a3"><span>How long can I keep a book?</span><svg class="icon" aria-hidden="true"><use href="#icon-chevron-down"/></svg></button></h3>
+            <div class="faq-item__a" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden><p><span class="ph">[Add the borrowing period.]</span></p></div>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-item__q"><button class="faq-item__btn" type="button" id="faq-q4" aria-expanded="false" aria-controls="faq-a4"><span>What if I lose or damage a book?</span><svg class="icon" aria-hidden="true"><use href="#icon-chevron-down"/></svg></button></h3>
+            <div class="faq-item__a" id="faq-a4" role="region" aria-labelledby="faq-q4" hidden><p><span class="ph">[Add the school's policy for lost or damaged books.]</span> Please tell the library staff as soon as possible.</p></div>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-item__q"><button class="faq-item__btn" type="button" id="faq-q5" aria-expanded="false" aria-controls="faq-a5"><span>Does the library have digital resources?</span><svg class="icon" aria-hidden="true"><use href="#icon-chevron-down"/></svg></button></h3>
+            <div class="faq-item__a" id="faq-a5" role="region" aria-labelledby="faq-q5" hidden><p><span class="ph">[State whether digital resources are available and how to access them.]</span> See the Digital Library section above for the current status.</p></div>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-item__q"><button class="faq-item__btn" type="button" id="faq-q6" aria-expanded="false" aria-controls="faq-a6"><span>Can parents visit the library?</span><svg class="icon" aria-hidden="true"><use href="#icon-chevron-down"/></svg></button></h3>
+            <div class="faq-item__a" id="faq-a6" role="region" aria-labelledby="faq-q6" hidden><p><span class="ph">[Add the school's visitor arrangements.]</span> Please contact the school to arrange a visit.</p></div>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-item__q"><button class="faq-item__btn" type="button" id="faq-q7" aria-expanded="false" aria-controls="faq-a7"><span>Can I suggest a book for the library?</span><svg class="icon" aria-hidden="true"><use href="#icon-chevron-down"/></svg></button></h3>
+            <div class="faq-item__a" id="faq-a7" role="region" aria-labelledby="faq-q7" hidden><p><span class="ph">[Add how pupils and parents can suggest titles.]</span></p></div>
+          </div>
+        </div>
+        <p class="sample-note sample-note--center">Answers contain placeholders on purpose. No policies, hours or fees have been invented.</p>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         SECTION 13: FINAL CALL TO ACTION
+         ====================================================== -->
+    <section class="cta" id="cta" aria-labelledby="cta-title">
+      <img class="cta__bg" src="https://images.unsplash.com/photo-1632217131414-be0bc91aedb9?auto=format&fit=crop&q=75&w=1920" width="1920" height="1280" alt="" loading="lazy">
+      <div class="cta__overlay" aria-hidden="true"></div>
+      <div class="cta__content container reveal">
+        <h2 class="cta__title" id="cta-title">Every Book Opens a New Possibility.</h2>
+        <p class="cta__text">Come and discover your next favourite story, your next big idea, and a lifelong habit of learning.</p>
+        <div class="cta__buttons">
+          <a class="btn btn--green" href="#resources">Explore Library Resources
+            <svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="contact.html">
+            <svg class="icon" aria-hidden="true"><use href="#icon-mail"/></svg>Contact the Library
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================================================
+       SECTION 14: FOOTER (same as the other pages)
+       ====================================================== -->
+  <footer class="footer" id="footer">
+    <div class="container footer__grid">
+
+      <!-- COLUMN 1: SCHOOL IDENTITY -->
+      <div class="footer__col footer__col--about">
+        <a class="footer__brand" href="index.html" aria-label="Crestview Academy home">
+          <svg class="brand__mark" viewBox="0 0 48 56" aria-hidden="true" focusable="false">
+            <path d="M24 2 4 9v17c0 14 8.600 24.200 20 28 11.400-3.800 20-14 20-28V9L24 2Z" fill="#1d5fd8"/>
+            <path d="M24 2 4 9v17c0 14 8.600 24.200 20 28V2Z" fill="#1d5fd8"/>
+            <path d="M11 24.500c4.200-1.600 8.600-1.400 13 1.200 4.400-2.600 8.800-2.800 13-1.200V38c-4.200-1.500-8.600-1.200-13 1.400-4.400-2.600-8.800-2.900-13-1.400V24.500Z" fill="#fff"/>
+            <path d="M24 25.7v13.7" stroke="#1d5fd8" stroke-width="1.6"/>
+          <path d="m24 9.500 2.100 4.300 4.700.7-3.400 3.300.8 4.700-4.200-2.200-4.200 2.200.8-4.700-3.400-3.300 4.700-.7L24 9.500Z" fill="#ffc928"/>
+          </svg>
+          <span class="logo-text logo-text--light"><span class="logo-text__name">Crestview</span><span class="logo-text__tag">Academy</span></span>
+        </a>
+        <p class="footer__text">We provide a safe, supportive learning environment where every child is encouraged to achieve academically and grow in character.</p>
+        <!-- EDIT: replace each "#" with your real social media page -->
+        <ul class="socials" aria-label="Social media">
+          <li><a href="#" aria-label="Facebook (placeholder link)"><svg class="icon"><use href="#icon-facebook"/></svg></a></li>
+          <li><a href="#" aria-label="Instagram (placeholder link)"><svg class="icon"><use href="#icon-instagram"/></svg></a></li>
+          <li><a href="#" aria-label="X (placeholder link)"><svg class="icon"><use href="#icon-x"/></svg></a></li>
+          <li><a href="#" aria-label="YouTube (placeholder link)"><svg class="icon"><use href="#icon-youtube"/></svg></a></li>
+        </ul>
+      </div>
+
+      <!-- COLUMN 2: QUICK LINKS -->
+      <nav class="footer__col" aria-labelledby="footer-links-title">
+        <h2 class="footer__title" id="footer-links-title">Quick Links</h2>
+        <ul class="footer__links">
+          <li><a href="index.html"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"/></svg>Home</a></li>
+          <li><a href="about.html"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"/></svg>About Us</a></li>
+          <li><a href="index.html#courses"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"/></svg>Academic Programs</a></li>
+          <li><a href="nursery.html"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"/></svg>Nursery</a></li>
+          <li><a href="primary.html"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"/></svg>Primary School</a></li>
+          <li><a href="secondary.html"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"/></svg>Secondary School</a></li>
+          <li><a href="library.html"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"/></svg>Library</a></li>
+          <li><a href="index.html#admissions"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"/></svg>Admissions</a></li>
+          <li><a href="index.html#news"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"/></svg>News and Events</a></li>
+          <li><a href="contact.html"><svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"/></svg>Contact Us</a></li>
+        </ul>
+      </nav>
+
+      <!-- COLUMN 3: CONTACT DETAILS (all placeholders: replace with real details) -->
+      <div class="footer__col">
+        <h2 class="footer__title">Contact Details</h2>
+        <ul class="footer__contact">
+          <li><svg class="icon" aria-hidden="true"><use href="#icon-pin"/></svg><span>123 Learning Avenue, Your City, Your State</span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#icon-phone"/></svg><a href="tel:+000000000000">+000 000 000 0000</a></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#icon-mail"/></svg><a href="mailto:info@schoolname.com">info@schoolname.com</a></li>
+        </ul>
+        <p class="footer__hint">Placeholder details. Replace before publishing.</p>
+      </div>
+
+      <!-- COLUMN 4: NEWSLETTER.
+           It only shows an honest message until you connect a service: set NEWSLETTER_ENDPOINT in secondary.js -->
+      <div class="footer__col">
+        <h2 class="footer__title" id="newsletter-title">Newsletter</h2>
+        <p class="footer__text">Get school news, announcements and updates in your inbox.</p>
+        <form class="newsletter" id="newsletter-form" novalidate aria-labelledby="newsletter-title">
+          <label class="visually-hidden" for="newsletter-email">Email address</label>
+          <div class="newsletter__row">
+            <input class="newsletter__input" id="newsletter-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="Your email address" required aria-describedby="newsletter-status">
+            <button class="newsletter__button" type="submit">Subscribe</button>
+          </div>
+          <p class="newsletter__status" id="newsletter-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- COPYRIGHT BAR -->
+    <div class="footer__bottom">
+      <div class="container footer__bottom-inner">
+        <p>&copy; <span id="footer-year">2024</span> Crestview Academy. All Rights Reserved.</p>
+        <ul class="footer__legal">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+</body>
+</html>
